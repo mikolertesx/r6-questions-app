@@ -78,6 +78,7 @@ const OptionalQuestionGen = ({ setData, questionType }) => {
         <input
           key={`option-input-${index}`}
           type="text"
+          value={optionsTexts[`option-${index}`] || ''}
           onChange={(e) => {
             setOptionsTexts({
               ...optionsTexts,
@@ -133,6 +134,7 @@ const CheckboxQuestionGen = ({ setData, questionType }) => {
         <input
           key={`option-input-${index}`}
           type="text"
+          value={checkboxTexts[`checkbox-${index}`] || ''}
           onChange={(e) => {
             setCheckboxTexts({
               ...checkboxTexts,
