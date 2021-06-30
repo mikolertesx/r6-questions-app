@@ -58,6 +58,6 @@ formSchema.methods.addBooleanQuestion = async function (text) {
   return newQuestion
 }
 
-const Form = Mongoose.model('Form', formSchema)
+const Form = Mongoose.models.Form || Mongoose.model('Form', formSchema)
 
 export default Form

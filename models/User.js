@@ -38,6 +38,6 @@ userSchema.statics.createUser = async function (username, password) {
 	});
 };
 
-const User = Mongoose.model("User", userSchema);
+const User = mongoose.models.User || Mongoose.model("User", userSchema);
 
 export default User;
