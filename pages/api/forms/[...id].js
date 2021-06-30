@@ -8,8 +8,8 @@ export default async function handler(req, res) {
     case 'GET':
       try {
         const forms = await Form.findOne({ _id: id })
-        console.log(forms)
-        res.status(200).json({ data: forms })
+        const populatedForms = await forms.execPopulate('questions')
+        res.status(200).json({ data: populatedForms })
       } catch (error) {
         res.status(400).json({ error: error.message })
       }
