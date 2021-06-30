@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const OptionalQuestionGen = ({ setData, questionType }) => {
+const OptionalQuestionGen = ({ setData, questionData }) => {
   const [optionsTotal, setOptionsTotal] = useState(0)
   const [optionsTexts, setOptionsTexts] = useState({})
 
@@ -21,7 +21,7 @@ const OptionalQuestionGen = ({ setData, questionType }) => {
 
   useEffect(() => {
     setData({
-      type: questionType,
+      ...questionData,
       options: {
         ...optionsTexts,
       },
@@ -30,8 +30,14 @@ const OptionalQuestionGen = ({ setData, questionType }) => {
 
   return (
     <>
-      <h2>Add the options that you need</h2>
-      <label htmlFor="">How many options will you enter?</label>
+      <label>Add your question</label>
+      <input
+        type="text"
+        onChange={(e) =>
+          setData({ ...questionData, questionText: e.target.value })
+        }
+      />
+      <label htmlFor="">Add the options that you need</label>
       <input
         type="number"
         onChange={(e) => {

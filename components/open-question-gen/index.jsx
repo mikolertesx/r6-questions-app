@@ -1,10 +1,10 @@
-const OpenQuestionGen = ({ setData, questionType }) => {
+const OpenQuestionGen = ({ setData, questionData }) => {
   return (
     <>
       <label htmlFor="">Add your question</label>
       <textarea
         onChange={(e) =>
-          setData({ type: questionType, questionText: e.target.value })
+          setData({ ...questionData, questionText: e.target.value })
         }
       />
     </>

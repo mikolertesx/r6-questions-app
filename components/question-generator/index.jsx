@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import OpenQuestionGen from 'components/open-question-gen'
 import OptionalQuestionGen from 'components/optional-question-gen'
-import CheckboxQuestionGen from 'components/checkbox-question-gen'
 import RangeQuestionGen from 'components/range-question-gen'
 
 import options from 'constants/options'
@@ -31,7 +30,7 @@ const questionTypes = [
 
 function QuestionGenerator() {
   const [questionData, setQuestionData] = useState({
-    type: 'open-question',
+    type: options.OPEN,
   })
 
   useEffect(() => {
@@ -56,25 +55,25 @@ function QuestionGenerator() {
         {questionData.type === questionTypes[0].value && (
           <OpenQuestionGen
             setData={setQuestionData}
-            questionType={questionData.type}
+            questionData={questionData}
           />
         )}
         {questionData.type === questionTypes[1].value && (
           <OptionalQuestionGen
             setData={setQuestionData}
-            questionType={questionData.type}
+            questionData={questionData}
           />
         )}
         {questionData.type === questionTypes[2].value && (
-          <CheckboxQuestionGen
+          <OptionalQuestionGen
             setData={setQuestionData}
-            questionType={questionData.type}
+            questionData={questionData}
           />
         )}
         {questionData.type === questionTypes[3].value && (
           <RangeQuestionGen
             setData={setQuestionData}
-            questionType={questionData.type}
+            questionData={questionData}
           />
         )}
       </div>

@@ -1,6 +1,13 @@
-const RangeQuestionGen = ({ setData, questionType }) => {
+const RangeQuestionGen = ({ setData, questionData }) => {
   return (
     <>
+      <label>Add your question</label>
+      <input
+        type="text"
+        onChange={(e) =>
+          setData({ ...questionData, questionText: e.target.value })
+        }
+      />
       <label htmlFor="">
         Add the last value for the range (the starting value is always 0)
       </label>
@@ -8,7 +15,7 @@ const RangeQuestionGen = ({ setData, questionType }) => {
         type="number"
         onChange={(e) => {
           if (e.target.value > 0) {
-            setData({ type: questionType, rangeLimit: e.target.value })
+            setData({ ...questionData, rangeLimit: e.target.value })
           }
         }}
       />
