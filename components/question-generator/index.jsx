@@ -28,7 +28,7 @@ const questionTypes = [
   },
 ]
 
-function QuestionGenerator() {
+function QuestionGenerator({ setFormData, formData }) {
   const [questionData, setQuestionData] = useState({
     type: options.OPEN,
   })
@@ -77,6 +77,16 @@ function QuestionGenerator() {
           />
         )}
       </div>
+      <button
+        onClick={() => {
+          setFormData({
+            ...formData,
+            questions: [...formData.questions, questionData],
+          })
+        }}
+      >
+        Add question
+      </button>
     </div>
   )
 }
