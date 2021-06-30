@@ -1,6 +1,6 @@
-import Mongoose from 'mongoose'
+import mongoose from 'mongoose'
 
-const questionSchema = new Mongoose.Schema({
+const questionSchema = new mongoose.Schema({
   text: String,
   type: String,
   minRange: {
@@ -17,6 +17,6 @@ const questionSchema = new Mongoose.Schema({
   },
 })
 
-const Question = Mongoose.models.Question || Mongoose.model('Question', questionSchema)
+const Question = mongoose.models.Question || mongoose.model('Question', questionSchema)
 
 export default Question
