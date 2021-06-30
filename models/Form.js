@@ -52,7 +52,7 @@ formSchema.methods.addBooleanQuestion = async function (text) {
   const newQuestion = await Questions.create({
     text,
     options: ['YES', 'NO'],
-    type: types.CHECKBOX,
+    type: types.BOOLEAN,
   })
   this.questions.push(newQuestion._id)
   return newQuestion
