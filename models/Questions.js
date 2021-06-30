@@ -17,6 +17,6 @@ const questionSchema = new Mongoose.Schema({
   },
 })
 
-const Question = Mongoose.model('Question', questionSchema)
+const Question = Mongoose.models.Question || Mongoose.model('Question', questionSchema)
 
 export default Question
