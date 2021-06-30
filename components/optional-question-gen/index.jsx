@@ -38,12 +38,6 @@ const OptionalQuestionGen = ({ setData, questionData }) => {
         }
       />
       <label htmlFor="">Add the options that you need</label>
-      <input
-        type="number"
-        onChange={(e) => {
-          setOptionsTotal(parseInt(e.target.value))
-        }}
-      />
       {optionsArray.map((option, index) => (
         <input
           key={`option-input-${index}`}
@@ -57,6 +51,18 @@ const OptionalQuestionGen = ({ setData, questionData }) => {
           }}
         />
       ))}
+      <button onClick={() => setOptionsTotal(optionsTotal + 1)}>
+        Add option
+      </button>
+      <button
+        onClick={() => {
+          if (optionsTotal > 0) {
+            setOptionsTotal(optionsTotal - 1)
+          }
+        }}
+      >
+        Remove option
+      </button>
     </>
   )
 }
