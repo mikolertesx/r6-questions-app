@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import styles from './styles.module.scss'
 
 const OptionalQuestionGen = ({ setData, questionData }) => {
   const [optionsTotal, setOptionsTotal] = useState(0)
@@ -17,7 +18,7 @@ const OptionalQuestionGen = ({ setData, questionData }) => {
         setOptionsTexts(newOptionsObj)
       }
     }
-  }, [optionsTotal])
+  }, [optionsTotal, optionsTexts])
 
   useEffect(() => {
     setData({
@@ -26,10 +27,10 @@ const OptionalQuestionGen = ({ setData, questionData }) => {
         ...optionsTexts,
       },
     })
-  }, [optionsTexts])
+  }, [optionsTexts, setData, questionData])
 
   return (
-    <>
+    <div className={styles['question-gen-container']}>
       <label>Add your question</label>
       <input
         type="text"
@@ -63,7 +64,7 @@ const OptionalQuestionGen = ({ setData, questionData }) => {
       >
         Remove option
       </button>
-    </>
+    </div>
   )
 }
 

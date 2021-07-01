@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import OpenQuestionGen from 'components/open-question-gen'
 import OptionalQuestionGen from 'components/optional-question-gen'
 import RangeQuestionGen from 'components/range-question-gen'
+import styles from './styles.module.scss'
 
 import options from 'constants/options'
 
@@ -38,15 +39,20 @@ function QuestionGenerator({ setFormData, formData }) {
   }, [questionData])
 
   return (
-    <div className="question-generator">
-      <h1>Add new questions</h1>
+    <div className={styles['question-generator']}>
+      <h1 className={styles['question-title']}>Add new questions</h1>
       <select
+        className={styles.input}
         onChange={(e) => {
           setQuestionData({ type: e.target.value })
         }}
       >
         {questionTypes.map((questionType) => (
-          <option value={questionType.value} key={questionType.id}>
+          <option
+            className={styles.option}
+            value={questionType.value}
+            key={questionType.id}
+          >
             {questionType.type}
           </option>
         ))}
