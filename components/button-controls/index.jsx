@@ -1,4 +1,5 @@
 import { BsPlusCircleFill, BsFillDashCircleFill } from 'react-icons/bs'
+import { GiBouncingSword } from 'react-icons/gi'
 import styles from './styles.module.scss'
 
 const ButtonControls = ({ addFn, subtractFn, addText, subtractText }) => {
@@ -8,6 +9,7 @@ const ButtonControls = ({ addFn, subtractFn, addText, subtractText }) => {
         <BsPlusCircleFill />
         <span>{addText}</span>
       </div>
+      <GiBouncingSword />
       <div onClick={subtractFn} className={styles.btn}>
         <BsFillDashCircleFill />
         <span>{subtractText}</span>
