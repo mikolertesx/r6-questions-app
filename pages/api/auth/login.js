@@ -5,6 +5,22 @@ const loginSchema = {
   username: '[String] The name of the user you are trying to log into.',
   password: '[String] The password.',
 }
+/**
+ * Asks for username and password and returns a [token, error] array.
+ * @param  {String} username
+ * @param  {String} password
+ * @returns {[String, Error]} An array made of a token, and a error object.
+ */
+export async function loginUser(username, password) {
+  const foundUser = await User.findOne({ username })
+
+  if (!foundUser) {
+    return [null, new Error(`No user found with ${username}`)]
+  }
+
+  const [token, error] = await foundUser.login(password)
+  return [token, error]
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -33,16 +49,8 @@ export default async function handler(req, res) {
       schema: loginSchema,
     })
   }
-
-  const foundUser = await User.findOne({ username })
-
-  if (!foundUser) {
-    return res.status(400).json({
-      error: `No user found with ${username}`,
-    })
-  }
-
-  const [token, error] = await foundUser.login(password)
+	
+	const [token, error] = await loginUser(username, password);
 
   if (error) {
     return res.status(400).json({

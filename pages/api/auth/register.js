@@ -6,6 +6,11 @@ const registerSchema = {
   password: '[String] The password.',
 }
 
+export async function registerUser(username, password) {
+	const [token, error] = await User.createUser(username, password);
+	return [token, error];
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(400).json({
@@ -43,7 +48,7 @@ export default async function handler(req, res) {
     })
   }
 
-  const [token, error] = await User.createUser(username, password)
+  const [token, error] = await registerUser(username, password);
 
   if (error) {
     return res.status(400).json({
