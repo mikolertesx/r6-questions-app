@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import QuestionGenerator from 'components/question-generator'
+import QuestionCard from 'components/question-card'
 
 const FormCreationInterface = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +24,15 @@ const FormCreationInterface = () => {
           })
         }
       />
-      <QuestionGenerator setFormData={setFormData} formData={formData} />
+      <div>
+        {
+         formData.questions.length && formData.questions.map((question,index)=>{
+          return <QuestionCard key={index} question={question}/>
+         }) 
+        }
+        <QuestionGenerator setFormData={setFormData} formData={formData} />
+
+      </div>
     </div>
   )
 }
