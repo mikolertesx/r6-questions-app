@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import OpenQuestionGen from 'components/open-question-gen'
 import OptionalQuestionGen from 'components/optional-question-gen'
 import RangeQuestionGen from 'components/range-question-gen'
+import styles from './styles.module.scss'
 
 import options from 'constants/options'
 
@@ -28,29 +29,42 @@ const questionTypes = [
   },
 ]
 
-function QuestionGenerator({ setFormData, formData }) {
+function QuestionGenerator({ setFormData, formData, index }) {
   const [questionData, setQuestionData] = useState({
     type: options.OPEN,
   })
 
   useEffect(() => {
     console.log(questionData)
+    const newArray = [...formData.questions]
+    newArray[index] = questionData
+    setFormData({
+      ...formData,
+      questions: newArray,
+    })
   }, [questionData])
 
   return (
-    <div className="question-generator">
-      <h1>Add new questions</h1>
-      <select
-        onChange={(e) => {
-          setQuestionData({ type: e.target.value })
-        }}
-      >
-        {questionTypes.map((questionType) => (
-          <option value={questionType.value} key={questionType.id}>
-            {questionType.type}
-          </option>
-        ))}
-      </select>
+    <div className={styles['question-generator']}>
+      <h1 className={styles['question-title']}>{`Question ${index + 1}`}</h1>
+      <div className={styles['m-1']}>
+        <select
+          className={styles.input}
+          onChange={(e) => {
+            setQuestionData({ type: e.target.value })
+          }}
+        >
+          {questionTypes.map((questionType) => (
+            <option
+              className={styles.option}
+              value={questionType.value}
+              key={questionType.id}
+            >
+              {questionType.type}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="question-input-container">
         {questionData.type === questionTypes[0].value && (
           <OpenQuestionGen
@@ -77,16 +91,6 @@ function QuestionGenerator({ setFormData, formData }) {
           />
         )}
       </div>
-      <button
-        onClick={() => {
-          setFormData({
-            ...formData,
-            questions: [...formData.questions, questionData],
-          })
-        }}
-      >
-        Add question
-      </button>
     </div>
   )
 }
