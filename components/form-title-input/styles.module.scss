@@ -8,8 +8,18 @@
   margin-left: 7.5%;
   padding: 2rem;
   background-color: $light-black;
+  position: relative;
   @extend .flex-column;
   @extend .shadow;
+}
+
+.form-title-icon {
+  position: absolute;
+  opacity: 0.3;
+  color: $light-grey;
+  transform: scale(5);
+  top: 3rem;
+  right: 3rem;
 }
 
 .form-title-label {

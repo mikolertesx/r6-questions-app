@@ -29,18 +29,24 @@ const questionTypes = [
   },
 ]
 
-function QuestionGenerator({ setFormData, formData }) {
+function QuestionGenerator({ setFormData, formData, index }) {
   const [questionData, setQuestionData] = useState({
     type: options.OPEN,
   })
 
   useEffect(() => {
     console.log(questionData)
+    const newArray = [...formData.questions]
+    newArray[index] = questionData
+    setFormData({
+      ...formData,
+      questions: newArray,
+    })
   }, [questionData])
 
   return (
     <div className={styles['question-generator']}>
-      <h1 className={styles['question-title']}>Add new questions</h1>
+      <h1 className={styles['question-title']}>{`Question ${index + 1}`}</h1>
       <div className={styles['m-1']}>
         <select
           className={styles.input}
@@ -85,16 +91,6 @@ function QuestionGenerator({ setFormData, formData }) {
           />
         )}
       </div>
-      <button
-        onClick={() => {
-          setFormData({
-            ...formData,
-            questions: [...formData.questions, questionData],
-          })
-        }}
-      >
-        Add question
-      </button>
     </div>
   )
 }
