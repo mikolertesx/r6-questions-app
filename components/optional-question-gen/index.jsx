@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import ButtonControls from 'components/button-controls'
 import styles from './styles.module.scss'
 
 const OptionalQuestionGen = ({ setData, questionData }) => {
@@ -27,7 +28,7 @@ const OptionalQuestionGen = ({ setData, questionData }) => {
         ...optionsTexts,
       },
     })
-  }, [optionsTexts, setData, questionData])
+  }, [optionsTexts])
 
   return (
     <div className={styles['question-gen-container']}>
@@ -57,18 +58,18 @@ const OptionalQuestionGen = ({ setData, questionData }) => {
             }}
           />
         ))}
-        <button onClick={() => setOptionsTotal(optionsTotal + 1)}>
-          Add option
-        </button>
-        <button
-          onClick={() => {
-            if (optionsTotal > 0) {
-              setOptionsTotal(optionsTotal - 1)
-            }
-          }}
-        >
-          Remove option
-        </button>
+        <div>
+          <ButtonControls
+            addFn={() => setOptionsTotal(optionsTotal + 1)}
+            subtractFn={() => {
+              if (optionsTotal > 0) {
+                setOptionsTotal(optionsTotal - 1)
+              }
+            }}
+            addText="Add option"
+            subtractText="Remove option"
+          />
+        </div>
       </div>
     </div>
   )
