@@ -31,39 +31,45 @@ const OptionalQuestionGen = ({ setData, questionData }) => {
 
   return (
     <div className={styles['question-gen-container']}>
-      <label>Add your question</label>
+      <label className={styles.label}>Add your question</label>
       <input
         type="text"
+        className={styles.input}
         onChange={(e) =>
           setData({ ...questionData, questionText: e.target.value })
         }
       />
-      <label htmlFor="">Add the options that you need</label>
-      {optionsArray.map((option, index) => (
-        <input
-          key={`option-input-${index}`}
-          type="text"
-          value={optionsTexts[`option-${index}`] || ''}
-          onChange={(e) => {
-            setOptionsTexts({
-              ...optionsTexts,
-              [`option-${index}`]: e.target.value,
-            })
+      <div className={styles['options-container']}>
+        <label className={styles.label} htmlFor="">
+          Add the options that you need
+        </label>
+        {optionsArray.map((option, index) => (
+          <input
+            className={styles.input}
+            key={`option-input-${index}`}
+            type="text"
+            value={optionsTexts[`option-${index}`] || ''}
+            onChange={(e) => {
+              setOptionsTexts({
+                ...optionsTexts,
+                [`option-${index}`]: e.target.value,
+              })
+            }}
+          />
+        ))}
+        <button onClick={() => setOptionsTotal(optionsTotal + 1)}>
+          Add option
+        </button>
+        <button
+          onClick={() => {
+            if (optionsTotal > 0) {
+              setOptionsTotal(optionsTotal - 1)
+            }
           }}
-        />
-      ))}
-      <button onClick={() => setOptionsTotal(optionsTotal + 1)}>
-        Add option
-      </button>
-      <button
-        onClick={() => {
-          if (optionsTotal > 0) {
-            setOptionsTotal(optionsTotal - 1)
-          }
-        }}
-      >
-        Remove option
-      </button>
+        >
+          Remove option
+        </button>
+      </div>
     </div>
   )
 }

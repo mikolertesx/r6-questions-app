@@ -41,22 +41,24 @@ function QuestionGenerator({ setFormData, formData }) {
   return (
     <div className={styles['question-generator']}>
       <h1 className={styles['question-title']}>Add new questions</h1>
-      <select
-        className={styles.input}
-        onChange={(e) => {
-          setQuestionData({ type: e.target.value })
-        }}
-      >
-        {questionTypes.map((questionType) => (
-          <option
-            className={styles.option}
-            value={questionType.value}
-            key={questionType.id}
-          >
-            {questionType.type}
-          </option>
-        ))}
-      </select>
+      <div className={styles['m-1']}>
+        <select
+          className={styles.input}
+          onChange={(e) => {
+            setQuestionData({ type: e.target.value })
+          }}
+        >
+          {questionTypes.map((questionType) => (
+            <option
+              className={styles.option}
+              value={questionType.value}
+              key={questionType.id}
+            >
+              {questionType.type}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="question-input-container">
         {questionData.type === questionTypes[0].value && (
           <OpenQuestionGen
