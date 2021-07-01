@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import QuestionGenerator from 'components/question-generator'
+import FormTitleInput from 'components/form-title-input'
 
 const FormCreationInterface = () => {
   const [formData, setFormData] = useState({
     formName: '',
-    questions: [],
+    questions: [1],
   })
 
   useEffect(() => {
@@ -13,17 +14,14 @@ const FormCreationInterface = () => {
 
   return (
     <div className="interface-container">
-      <label htmlFor=""></label>
-      <input
-        type="text"
-        onChange={(e) =>
-          setFormData({
-            ...formData,
-            formName: e.target.value,
-          })
-        }
-      />
-      <QuestionGenerator setFormData={setFormData} formData={formData} />
+      <FormTitleInput setFormData={setFormData} formData={formData} />
+      {formData.questions.map((question, index) => (
+        <QuestionGenerator
+          key={`${formData.formName}-question-${index}`}
+          setFormData={setFormData}
+          formData={formData}
+        />
+      ))}
     </div>
   )
 }
