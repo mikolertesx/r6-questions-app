@@ -1,11 +1,17 @@
 import mongoose from 'mongoose'
 import Questions from 'models/Questions'
 import types from 'constants/options'
+import Answers from 'models/Answers'
 
 const formSchema = new mongoose.Schema({
   author: mongoose.Types.ObjectId,
   questions: [{ type: mongoose.Types.ObjectId, ref: 'Question' }],
 })
+
+formSchema.methods.clientsAnswers = async function (){
+  const answer = await Answers.find({form:this._id}).exec()
+  return answer
+}
 
 formSchema.methods.addMultipleQuestion = async function (text, options) {
   const newQuestion = await Questions.create({
