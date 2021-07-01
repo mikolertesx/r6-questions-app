@@ -1,0 +1,31 @@
+@import 'styles/shared';
+
+.question-generator {
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  width: 85%;
+  margin: 1.5rem 7.5%;
+  background-color: $light-grey;
+  padding: 0;
+  padding-bottom: 2rem;
+  overflow: hidden;
+  @extend .shadow;
+}
+
+.question-title {
+  margin: 0;
+  margin-bottom: 1rem;
+  width: 100%;
+  background-color: $light-black;
+  color: $light-grey;
+  padding: 1rem 2rem;
+  position: relative;
+  &::after {
+    content: '?';
+    position: absolute;
+    transform: scale(2.5);
+    opacity: 0.2;
+    left: 2rem;
+  }
+}

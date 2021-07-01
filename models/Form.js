@@ -1,10 +1,10 @@
-import Mongoose from 'mongoose'
-import Questions from 'models/questions'
+import mongoose from 'mongoose'
+import Questions from 'models/Questions'
 import types from 'constants/options'
 
-const formSchema = new Mongoose.Schema({
-  author: Mongoose.Types.ObjectId,
-  questions: [{ type: Mongoose.Types.ObjectId, ref: 'Question' }],
+const formSchema = new mongoose.Schema({
+  author: mongoose.Types.ObjectId,
+  questions: [{ type: mongoose.Types.ObjectId, ref: 'Question' }],
 })
 
 formSchema.methods.addMultipleQuestion = async function (text, options) {
@@ -58,6 +58,6 @@ formSchema.methods.addBooleanQuestion = async function (text) {
   return newQuestion
 }
 
-const Form = Mongoose.models.Form || Mongoose.model('Form', formSchema)
+const Form = mongoose.models.Form || mongoose.model('Form', formSchema)
 
 export default Form

@@ -1,12 +1,23 @@
 import { useEffect, useState } from 'react'
 import QuestionGenerator from 'components/question-generator'
 import QuestionCard from 'components/question-card'
+import FormTitleInput from 'components/form-title-input'
+import ButtonControls from 'components/button-controls'
+import styles from './styles.module.scss'
 
 const FormCreationInterface = () => {
   const [formData, setFormData] = useState({
     formName: '',
-    questions: [],
+    questions: [
+      {
+        type: 'OPEN',
+      },
+    ],
   })
+  const [questionsTotal, setQuestionsTotal] = useState(1)
+
+  let questionsArray =
+    questionsTotal > 1 ? new Array(questionsTotal).fill('*') : ['*']
 
   useEffect(() => {
     console.log(formData)
@@ -14,24 +25,26 @@ const FormCreationInterface = () => {
 
   return (
     <div className="interface-container">
-      <label htmlFor=""></label>
-      <input
-        type="text"
-        onChange={(e) =>
-          setFormData({
-            ...formData,
-            formName: e.target.value,
-          })
-        }
-      />
-      <div>
-        {
-         formData.questions.length && formData.questions.map((question,index)=>{
-          return <QuestionCard key={index} question={question}/>
-         }) 
-        }
-        <QuestionGenerator setFormData={setFormData} formData={formData} />
-
+      <FormTitleInput setFormData={setFormData} formData={formData} />
+      {questionsArray.map((question, index) => (
+        <QuestionGenerator
+          key={`${formData.formName}-question-${index}`}
+          index={index}
+          setFormData={setFormData}
+          formData={formData}
+        />
+      ))}
+      <div className={styles['form-interface-controls']}>
+        <ButtonControls
+          addFn={() => setQuestionsTotal(questionsTotal + 1)}
+          subtractFn={() => {
+            if (questionsTotal > 0) {
+              setQuestionsTotal(questionsTotal - 1)
+            }
+          }}
+          addText="Add question"
+          subtractText="Remove question"
+        />
       </div>
     </div>
   )
