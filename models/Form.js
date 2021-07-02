@@ -1,11 +1,17 @@
-import Mongoose from 'mongoose'
-import Questions from 'models/questions'
+import mongoose from 'mongoose'
+import Questions from 'models/Questions'
 import types from 'constants/options'
+import Answers from 'models/Answers'
 
-const formSchema = new Mongoose.Schema({
-  author: Mongoose.Types.ObjectId,
-  questions: [{ type: Mongoose.Types.ObjectId, ref: 'Question' }],
+const formSchema = new mongoose.Schema({
+  author: mongoose.Types.ObjectId,
+  questions: [{ type: mongoose.Types.ObjectId, ref: 'Question' }],
 })
+
+formSchema.methods.clientsAnswers = async function (){
+  const answer = await Answers.find({form:this._id}).exec()
+  return answer
+}
 
 formSchema.methods.addMultipleQuestion = async function (text, options) {
   const newQuestion = await Questions.create({
@@ -52,12 +58,12 @@ formSchema.methods.addBooleanQuestion = async function (text) {
   const newQuestion = await Questions.create({
     text,
     options: ['YES', 'NO'],
-    type: types.CHECKBOX,
+    type: types.BOOLEAN,
   })
   this.questions.push(newQuestion._id)
   return newQuestion
 }
 
-const Form = Mongoose.model('Form', formSchema)
+const Form = mongoose.models.Form || mongoose.model('Form', formSchema)
 
 export default Form

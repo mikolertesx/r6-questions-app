@@ -1,13 +1,19 @@
-const OpenQuestionGen = ({ setData, questionType }) => {
+import styles from './styles.module.scss'
+
+const OpenQuestionGen = ({ setData, questionData }) => {
   return (
-    <>
-      <label htmlFor="">Add your question</label>
-      <textarea
+    <div className={styles['question-gen-container']}>
+      <label className={styles.label} htmlFor="">
+        Add your question
+      </label>
+      <input
+        className={styles.input}
+        type="text"
         onChange={(e) =>
-          setData({ type: questionType, questionText: e.target.value })
+          setData({ ...questionData, questionText: e.target.value })
         }
       />
-    </>
+    </div>
   )
 }
 

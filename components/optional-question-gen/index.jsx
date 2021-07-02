@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
+import ButtonControls from 'components/button-controls'
+import styles from './styles.module.scss'
 
-const OptionalQuestionGen = ({ setData, questionType }) => {
+const OptionalQuestionGen = ({ setData, questionData }) => {
   const [optionsTotal, setOptionsTotal] = useState(0)
   const [optionsTexts, setOptionsTexts] = useState({})
 
@@ -17,11 +19,11 @@ const OptionalQuestionGen = ({ setData, questionType }) => {
         setOptionsTexts(newOptionsObj)
       }
     }
-  }, [optionsTotal])
+  }, [optionsTotal, optionsTexts])
 
   useEffect(() => {
     setData({
-      type: questionType,
+      ...questionData,
       options: {
         ...optionsTexts,
       },
@@ -29,29 +31,47 @@ const OptionalQuestionGen = ({ setData, questionType }) => {
   }, [optionsTexts])
 
   return (
-    <>
-      <h2>Add the options that you need</h2>
-      <label htmlFor="">How many options will you enter?</label>
+    <div className={styles['question-gen-container']}>
+      <label className={styles.label}>Add your question</label>
       <input
-        type="number"
-        onChange={(e) => {
-          setOptionsTotal(parseInt(e.target.value))
-        }}
+        type="text"
+        className={styles.input}
+        onChange={(e) =>
+          setData({ ...questionData, questionText: e.target.value })
+        }
       />
-      {optionsArray.map((option, index) => (
-        <input
-          key={`option-input-${index}`}
-          type="text"
-          value={optionsTexts[`option-${index}`] || ''}
-          onChange={(e) => {
-            setOptionsTexts({
-              ...optionsTexts,
-              [`option-${index}`]: e.target.value,
-            })
-          }}
-        />
-      ))}
-    </>
+      <div className={styles['options-container']}>
+        <label className={styles.label} htmlFor="">
+          Add the options that you need
+        </label>
+        {optionsArray.map((option, index) => (
+          <input
+            className={styles.input}
+            key={`option-input-${index}`}
+            type="text"
+            value={optionsTexts[`option-${index}`] || ''}
+            onChange={(e) => {
+              setOptionsTexts({
+                ...optionsTexts,
+                [`option-${index}`]: e.target.value,
+              })
+            }}
+          />
+        ))}
+        <div>
+          <ButtonControls
+            addFn={() => setOptionsTotal(optionsTotal + 1)}
+            subtractFn={() => {
+              if (optionsTotal > 0) {
+                setOptionsTotal(optionsTotal - 1)
+              }
+            }}
+            addText="Add option"
+            subtractText="Remove option"
+          />
+        </div>
+      </div>
+    </div>
   )
 }
 
