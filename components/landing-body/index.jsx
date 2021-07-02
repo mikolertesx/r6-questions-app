@@ -12,7 +12,7 @@ const Body = () =>{
                 <p> Creating web forms with Enroute Form's unique form editor is just like writing a doc. Anyone can create 
                     beautiful online forms, quickly and intuitively, without any technical knowledge.
                 </p>
-                <button><strong>Start Now!</strong></button>    
+                <button><a href="/my-forms"><strong>Start Now!</strong></a></button>    
             </div>
         </div>
     )
