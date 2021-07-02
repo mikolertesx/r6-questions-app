@@ -1,3 +1,4 @@
+import Link from 'next/Link'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import styles from './styles.module.scss'
 
@@ -10,7 +11,9 @@ export const FormPreview = ({ currentForms, setCurrentForms, index }) => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles['form-title']}>{`Form ${index + 1}`}</h1>
+      <Link href={`/my-forms/${index}`}>
+        <h1 className={styles['form-title']}>{`Form ${index + 1}`}</h1>
+      </Link>
       <div className={styles.controls}>
         <RiDeleteBin5Fill
           className={styles['delete-btn']}
