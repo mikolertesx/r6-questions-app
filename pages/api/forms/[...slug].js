@@ -20,7 +20,6 @@ export const createQuestion = async (formId) => {
 
     return [newQuestion, null]
   } catch (err) {
-    console.log(err)
     return [null, new Error("Coudln't create form.")]
   }
 }
@@ -30,7 +29,6 @@ const findFormRoute = async (req, res) => {
   const [id] = slug
   try {
     const form = await Form.findOne({ _id: id })
-		console.log(form);
     const populatedForms = await form.execPopulate('questions')
     return res.status(200).json({ data: populatedForms })
   } catch (error) {
@@ -52,6 +50,34 @@ const createQuestionRoute = async (req, res) => {
   return res.json(data)
 }
 
+const deleteQuestionRoute = async (req, res) => {
+  const { slug } = req.query
+  const [formId, action, questionId] = slug
+
+  if (action !== 'remove-question') {
+    return res.json({
+      error: `Action ${action} doesn't exist. Try remove-question`,
+    })
+  }
+
+  try {
+    const form = await Form.findById(formId)
+    if (!form) {
+      return [null, new Error("Couldn't find Form.")]
+    }
+
+    form.questions.remove(questionId)
+    await form.save()
+
+    return res.json({
+      error: 'Successfully deleted',
+    })
+  } catch (err) {
+    console.error(err)
+    return res.status(400).json({ error: 'Something went wrong' })
+  }
+}
+
 export default async function handler(req, res) {
   const { method } = req
   const { slug } = req.query
@@ -65,6 +91,10 @@ export default async function handler(req, res) {
 
   if (slug.length === 2) {
     return createQuestionRoute(req, res)
+  }
+
+  if (slug.length === 3) {
+    return deleteQuestionRoute(req, res)
   }
 
   return res.json({
