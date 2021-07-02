@@ -8,7 +8,6 @@ export default async function handler(req, res) {
     case 'GET':
       try {
         const questions = await Question.findOne({ _id: id })
-        console.log(questions)
         res.status(200).json({ data: questions })
       } catch (error) {
         res.status(400).json({ error: error.message })
