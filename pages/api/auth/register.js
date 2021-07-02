@@ -7,8 +7,8 @@ const registerSchema = {
 }
 
 export async function registerUser(username, password) {
-	const [token, error] = await User.createUser(username, password);
-	return [token, error];
+  const [token, error] = await User.createUser(username, password)
+  return [token, error]
 }
 
 export default async function handler(req, res) {
@@ -40,7 +40,6 @@ export default async function handler(req, res) {
   }
 
   // Password verification.
-  // TODO Add proper password verification
   if (password.trim().length === 0) {
     return res.status(400).json({
       error: 'Incorrect password format',
@@ -48,7 +47,13 @@ export default async function handler(req, res) {
     })
   }
 
-  const [token, error] = await registerUser(username, password);
+  if (password.length < 6) {
+    return res.status(400).json({
+      error: 'Password too short',
+    })
+  }
+
+  const [token, error] = await registerUser(username, password)
 
   if (error) {
     return res.status(400).json({
