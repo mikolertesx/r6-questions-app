@@ -1,7 +1,22 @@
-export const FormPreview = () => {
+import { RiDeleteBin5Fill } from 'react-icons/ri'
+import styles from './styles.module.scss'
+
+export const FormPreview = ({ currentForms, setCurrentForms, index }) => {
+  const handleDelete = () => {
+    const newArray = [...currentForms]
+    newArray.splice(index, 1)
+    setCurrentForms(newArray)
+  }
+
   return (
-    <div>
-      <h1>This is a form</h1>
+    <div className={styles.container}>
+      <h1 className={styles['form-title']}>{`Form ${index + 1}`}</h1>
+      <div className={styles.controls}>
+        <RiDeleteBin5Fill
+          className={styles['delete-btn']}
+          onClick={handleDelete}
+        />
+      </div>
     </div>
   )
 }
