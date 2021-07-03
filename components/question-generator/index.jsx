@@ -31,7 +31,7 @@ const questionTypes = [
 
 function QuestionGenerator({ setFormData, formData, index }) {
   const [questionData, setQuestionData] = useState({
-    type: options.OPEN,
+    ...formData.questions[index],
   })
 
   useEffect(() => {
@@ -53,6 +53,7 @@ function QuestionGenerator({ setFormData, formData, index }) {
           onChange={(e) => {
             setQuestionData({ type: e.target.value })
           }}
+          value={questionData.type}
         >
           {questionTypes.map((questionType) => (
             <option

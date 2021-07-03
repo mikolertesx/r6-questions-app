@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import QuestionGenerator from 'components/question-generator'
-import QuestionCard from 'components/question-card'
 import FormTitleInput from 'components/form-title-input'
 import ButtonControls from 'components/button-controls'
 import styles from './styles.module.scss'
@@ -11,13 +10,10 @@ const FormCreationInterface = () => {
     questions: [
       {
         type: 'OPEN',
+        questionText: '',
       },
     ],
   })
-  const [questionsTotal, setQuestionsTotal] = useState(1)
-
-  let questionsArray =
-    questionsTotal > 1 ? new Array(questionsTotal).fill('*') : ['*']
 
   useEffect(() => {
     console.log(formData)
@@ -26,7 +22,7 @@ const FormCreationInterface = () => {
   return (
     <div className="interface-container">
       <FormTitleInput setFormData={setFormData} formData={formData} />
-      {questionsArray.map((question, index) => (
+      {formData.questions.map((question, index) => (
         <QuestionGenerator
           key={`${formData.formName}-question-${index}`}
           index={index}
@@ -36,12 +32,18 @@ const FormCreationInterface = () => {
       ))}
       <div className={styles['form-interface-controls']}>
         <ButtonControls
-          addFn={() => setQuestionsTotal(questionsTotal + 1)}
-          subtractFn={() => {
-            if (questionsTotal > 0) {
-              setQuestionsTotal(questionsTotal - 1)
-            }
+          addFn={() => {
+            const newQuestions = [...formData.questions]
+            newQuestions.push({
+              type: 'OPEN',
+              questionText: '',
+            })
+            setFormData({
+              ...formData,
+              questions: newQuestions,
+            })
           }}
+          subtractFn={() => {}}
           addText="Add question"
           subtractText="Remove question"
         />
