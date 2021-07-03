@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import QuestionGenerator from 'components/question-generator'
-import QuestionCard from 'components/question-card'
 import FormTitleInput from 'components/form-title-input'
-import ButtonControls from 'components/button-controls'
 import styles from './styles.module.scss'
+import Navbar from 'components/landing-navbar'
 
 const FormCreationInterface = () => {
   const [formData, setFormData] = useState({
@@ -24,9 +23,11 @@ const FormCreationInterface = () => {
   }, [formData])
 
   return (
+    <>
+    <Navbar/>
     <div className="interface-container">
       <FormTitleInput setFormData={setFormData} formData={formData} />
-      {questionsArray.map((question, index) => (
+      {formData.questions.map((question, index) => (
         <QuestionGenerator
           key={`${formData.formName}-question-${index}`}
           index={index}
@@ -35,18 +36,20 @@ const FormCreationInterface = () => {
         />
       ))}
       <div className={styles['form-interface-controls']}>
-        <ButtonControls
-          addFn={() => setQuestionsTotal(questionsTotal + 1)}
-          subtractFn={() => {
-            if (questionsTotal > 0) {
-              setQuestionsTotal(questionsTotal - 1)
-            }
-          }}
-          addText="Add question"
-          subtractText="Remove question"
-        />
+         <button onClick={() =>{
+           let newArray = [...formData.questions]
+           newArray.push({
+             type: 'OPEN'
+           })
+           setFormData({
+            ...formData,
+            questions: newArray,
+          })
+         }}>
+          <strong>Add a Question +</strong></button>
       </div>
     </div>
+    </>
   )
 }
 
