@@ -12,5 +12,7 @@ export const formsReducer = (state = initialState, action) => {
           questions: [],
         },
       }
+    default:
+      return state
   }
 }
