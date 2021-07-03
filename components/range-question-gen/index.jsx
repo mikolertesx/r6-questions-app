@@ -1,6 +1,8 @@
 import styles from './styles.module.scss'
 
 const RangeQuestionGen = ({ setData, questionData }) => {
+  const rangeValue = questionData.rangeLimit || ''
+  const textValue = questionData.questionText || ''
   return (
     <div className={styles['question-gen-container']}>
       <label className={styles.label}>Add your question</label>
@@ -10,6 +12,7 @@ const RangeQuestionGen = ({ setData, questionData }) => {
         onChange={(e) =>
           setData({ ...questionData, questionText: e.target.value })
         }
+        value={textValue}
       />
       <label className={styles.label} htmlFor="">
         Add the last value for the range (the starting value is always 0)
@@ -22,6 +25,7 @@ const RangeQuestionGen = ({ setData, questionData }) => {
             setData({ ...questionData, rangeLimit: e.target.value })
           }
         }}
+        value={rangeValue}
       />
     </div>
   )
