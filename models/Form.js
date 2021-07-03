@@ -8,8 +8,8 @@ const formSchema = new mongoose.Schema({
   questions: [{ type: mongoose.Types.ObjectId, ref: 'Question' }],
 })
 
-formSchema.methods.clientsAnswers = async function (){
-  const answer = await Answers.find({form:this._id}).exec()
+formSchema.methods.clientsAnswers = async function () {
+  const answer = await Answers.find({ form: this._id }).exec()
   return answer
 }
 

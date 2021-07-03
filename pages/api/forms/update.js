@@ -10,16 +10,24 @@ const updateFormSchema = {
 
 export const updateFormServer = async (formId, data) => {
   try {
-    const form = await Form.findOneAndUpdate({ _id: formId }, data, {
-      new: true,
-    })
-    console.log(data)
+    const form = await Form.findOneAndUpdate(
+      { _id: formId },
+      {
+        author: data.author,
+      }
+    )
+
     data.questions.forEach(async (question) => {
-      console.log(question)
-      await Questions.findOneAndUpdate({ _id: question._id }, question)
+      if (question._id) {
+        await Questions.findOneAndUpdate({ _id: question._id }, question)
+      } else {
+        const newQuestion = await Questions.create(question)
+        await form.update({
+          $push: { questions: newQuestion._id },
+        })
+      }
     })
 
-    await form.save()
     return [form, null]
   } catch (error) {
     return [null, error]

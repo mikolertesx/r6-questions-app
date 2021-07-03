@@ -1,8 +1,14 @@
 import mongoose from 'mongoose'
 
 const questionSchema = new mongoose.Schema({
-  text: String,
-  type: String,
+  text: {
+    type: String,
+    required: false,
+  },
+  type: {
+    type: String,
+    required: false,
+  },
   minRange: {
     type: Number,
     required: false,
@@ -17,6 +23,7 @@ const questionSchema = new mongoose.Schema({
   },
 })
 
-const Question = mongoose.models.Question || mongoose.model('Question', questionSchema)
+const Question =
+  mongoose.models.Question || mongoose.model('Question', questionSchema)
 
 export default Question
