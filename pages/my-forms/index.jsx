@@ -1,6 +1,6 @@
-import { connect, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { addForm } from 'store/formsReducer'
-import { FormPreview } from 'components/form-preview'
+import FormPreview from 'components/form-preview'
 import styles from './styles.module.scss'
 import Navbar from 'components/landing-navbar'
 
@@ -8,7 +8,6 @@ const MyFormsPage = ({ forms, addForm }) => {
   const addNewForm = () => {
     const index = Math.random()
     addForm(index)
-    console.log(forms)
   }
   return (
     <>
@@ -23,10 +22,12 @@ const MyFormsPage = ({ forms, addForm }) => {
             started.
           </p>
         )}
-        {Object.values(forms).length > 0 &&
-          Object.values(forms).map((form, index) => (
-            <FormPreview key={`form-${index}`} index={index} />
-          ))}
+        {Object.keys(forms).length > 0 &&
+          Object.keys(forms).map((formId, index) => {
+            const { formTitle } = forms[formId]
+            const title = formTitle !== '' ? formTitle : `Form ${index + 1}`
+            return <FormPreview key={formId} formId={formId} title={title} />
+          })}
         <button onClick={addNewForm}>
           <strong>Add a Form +</strong>
         </button>

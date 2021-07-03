@@ -12,6 +12,12 @@ export const formsReducer = (state = initialState, action) => {
           questions: [],
         },
       }
+    case FORM_TYPES.REMOVE_FORM:
+      const newState = { ...state }
+      delete newState[action.payload]
+      return {
+        ...newState,
+      }
     default:
       return state
   }
