@@ -24,6 +24,7 @@ const MyFormsPage = ({ forms, addForm }) => {
         )}
         {Object.keys(forms).length > 0 &&
           Object.keys(forms).map((formId, index) => {
+            console.log(forms, formId)
             const { formTitle } = forms[formId]
             const title = formTitle !== '' ? formTitle : `Form ${index + 1}`
             return <FormPreview key={formId} formId={formId} title={title} />

@@ -10,10 +10,7 @@ export const removeForm = (formId) => ({
   payload: formId,
 })
 
-export const updateForm = (formId, formData) => ({
+export const updateForm = (formData) => ({
   type: FORM_TYPES.UPDATE_FORM,
-  payload: {
-    formId,
-    formData,
-  },
+  payload: formData,
 })

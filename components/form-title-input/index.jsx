@@ -14,7 +14,7 @@ const FormTitleInput = ({ setFormData, formData }) => {
         onChange={(e) =>
           setFormData({
             ...formData,
-            formName: e.target.value,
+            formTitle: e.target.value,
           })
         }
       />
