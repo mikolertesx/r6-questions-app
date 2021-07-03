@@ -9,7 +9,7 @@ const Navbar = () => {
           </div>
           <div>
             <button>Login</button>
-            <button>Sign Up</button>
+            <button className={styles.Signup}>Sign Up</button>
           </div>
     </navbar>
   )
