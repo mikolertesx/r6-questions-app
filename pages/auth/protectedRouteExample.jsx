@@ -11,6 +11,9 @@ function ProtectedPage() {
 }
 
 export async function getServerSideProps(context) {
+	// This only checks if it's logged in or not.
+	// If it's not logged in it will return to a different destination.
+	// Permanent is false because you will sometimes be able to enter.
   const session = await getSession({ req: context.req })
 
   if (!session) {

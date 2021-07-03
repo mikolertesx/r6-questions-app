@@ -23,8 +23,16 @@ export default NextAuth({
           throw new Error('Could not log you in!')
         }
 
-        return user
+        return { name: user.username }
       },
     }),
   ],
+  callbacks: {
+    session: async (session, user) => {
+      const referredUser = await User.findOne({ username: user.name })
+      session.user.id = referredUser._id
+
+      return session
+    },
+  },
 })
