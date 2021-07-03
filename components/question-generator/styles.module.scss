@@ -3,8 +3,8 @@
 .question-generator {
   display: flex;
   flex-direction: column;
-  border-radius: 24px;
-  width: 85%;
+  border-radius: 5px;
+  max-width: 85%;
   margin: 1.5rem 7.5%;
   background-color: $light-grey;
   padding: 0;
@@ -14,12 +14,14 @@
 }
 
 .question-title {
-  margin: 0;
-  margin-bottom: 1rem;
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
   width: 100%;
   background-color: $light-black;
   color: $light-grey;
-  padding: 1rem 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   position: relative;
   &::after {
     content: '?';
@@ -27,5 +29,18 @@
     transform: scale(2.5);
     opacity: 0.2;
     left: 2rem;
+    top: 2rem;
+  }
+
+  .delete-btn {
+    align-self: center;
+    transform: scale(1.9);
+    cursor: pointer;
+    opacity: (0.5);
+    @extend .transition;
+    &:hover {
+      opacity: 1;
+      transform: scale(2.2);
+    }
   }
 }

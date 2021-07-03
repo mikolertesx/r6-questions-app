@@ -9,7 +9,6 @@ const ButtonControls = ({ addFn, subtractFn, addText, subtractText }) => {
         <BsPlusCircleFill />
         <span>{addText}</span>
       </div>
-      <GiBouncingSword />
       <div onClick={subtractFn} className={styles.btn}>
         <BsFillDashCircleFill />
         <span>{subtractText}</span>
