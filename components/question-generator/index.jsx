@@ -36,10 +36,8 @@ function QuestionGenerator({ setFormData, formData, index }) {
   })
 
   const handleDelete = () => {
-    console.log(`delete question ${index}`)
     const newArray = [...formData.questions]
-    let aber = newArray.splice(index, 1)
-    console.log("aber", aber)
+    newArray.splice(index, 1)
     setFormData({
       ...formData,
       questions: newArray,
@@ -47,6 +45,7 @@ function QuestionGenerator({ setFormData, formData, index }) {
   }
 
   useEffect(() => {
+    console.log(formData)
     const newArray = [...formData.questions]
     newArray[index] = questionData
     setFormData({
@@ -58,10 +57,10 @@ function QuestionGenerator({ setFormData, formData, index }) {
   return (
     <div className={styles['question-generator']}>
       <div className={styles['question-title']}>
-        <h1 >{`Question ${index + 1}`}</h1>
+        <h1>{`Question ${index + 1}`}</h1>
         <RiDeleteBin5Fill
-        className={styles['delete-btn']}
-        onClick={handleDelete}
+          className={styles['delete-btn']}
+          onClick={handleDelete}
         />
       </div>
       <div className={styles['m-1']}>

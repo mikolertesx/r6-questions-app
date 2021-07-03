@@ -1,6 +1,8 @@
+import React from 'react'
 import styles from './styles.module.scss'
 
 const OpenQuestionGen = ({ setData, questionData }) => {
+  console.log('pregunta', questionData)
   return (
     <div className={styles['question-gen-container']}>
       <label className={styles.label} htmlFor="">
@@ -12,9 +14,10 @@ const OpenQuestionGen = ({ setData, questionData }) => {
         onChange={(e) =>
           setData({ ...questionData, questionText: e.target.value })
         }
+        value={questionData.questionText}
       />
     </div>
   )
 }
 
-export default OpenQuestionGen
+export default React.memo(OpenQuestionGen)

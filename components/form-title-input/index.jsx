@@ -17,6 +17,7 @@ const FormTitleInput = ({ setFormData, formData }) => {
             formTitle: e.target.value,
           })
         }
+        value={formData.formTitle}
       />
     </div>
   )

@@ -16,8 +16,8 @@ const FormCreationInterface = ({ forms, updateForm }) => {
   })
 
   useEffect(() => {
-    console.log(formData)
-  }, [formData])
+    updateForm({ formId, formData })
+  }, [formData, formId, updateForm])
 
   return (
     <>
@@ -47,12 +47,6 @@ const FormCreationInterface = ({ forms, updateForm }) => {
             }}
           >
             <strong>Add a Question +</strong>
-          </button>
-          <button
-            onClick={() => updateForm({ formId, formData })}
-            style={{ marginLeft: '16px' }}
-          >
-            Save form
           </button>
         </div>
       </div>
