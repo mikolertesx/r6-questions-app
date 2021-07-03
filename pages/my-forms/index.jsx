@@ -2,6 +2,7 @@ import { useState } from 'react'
 import ButtonControls from 'components/button-controls'
 import { FormPreview } from 'components/form-preview'
 import styles from './styles.module.scss'
+import Navbar from 'components/landing-navbar'
 
 const MyFormsPage = () => {
   const [currentForms, setCurrentForms] = useState([])
@@ -10,15 +11,9 @@ const MyFormsPage = () => {
     newArray.push({})
     setCurrentForms(newArray)
   }
-  const removeForm = () => {
-    if (currentForms.length > 0) {
-      const newArray = [...currentForms]
-      newArray.pop()
-      setCurrentForms(newArray)
-    }
-  }
-
   return (
+    <>
+    <Navbar/>
     <div className={styles.container}>
       <h1>My Forms</h1>
       {currentForms.length > 0 ? (
@@ -38,13 +33,10 @@ const MyFormsPage = () => {
             setCurrentForms={setCurrentForms}
           />
         ))}
-      <ButtonControls
-        addFn={addNewForm}
-        subtractFn={removeForm}
-        addText="Add Form"
-        subtractText="Remove Form"
-      />
+      <button onClick={addNewForm}><strong>Add a Form +</strong></button>
     </div>
+    </>
+
   )
 }
 
