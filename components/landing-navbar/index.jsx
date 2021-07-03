@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <navbar className={styles.Navbar}>
           <div>
-            <h1>ENROUTE FORMS</h1>
+            <a href="/"><h1>ENROUTE FORMS</h1></a>
           </div>
           <div>
             <button>Login</button>
