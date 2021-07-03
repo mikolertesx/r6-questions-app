@@ -1,4 +1,5 @@
 export const FORM_TYPES = {
   ADD_FORM: 'ADD_FORM',
   REMOVE_FORM: 'REMOVE_FORM',
+  UPDATE_FORM: 'UPDATE_FORM',
 }

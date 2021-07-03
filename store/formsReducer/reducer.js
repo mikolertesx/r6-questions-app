@@ -18,6 +18,12 @@ export const formsReducer = (state = initialState, action) => {
       return {
         ...newState,
       }
+    case FORM_TYPES.UPDATE_FORM:
+      const { formId, formData } = action.payload
+      return {
+        ...state,
+        [formId]: formData,
+      }
     default:
       return state
   }
