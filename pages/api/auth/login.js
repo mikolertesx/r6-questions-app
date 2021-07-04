@@ -1,4 +1,5 @@
 import 'database'
+import { apiHandler } from 'next-api-simple-handler'
 import User from 'models/User'
 
 const loginSchema = {
@@ -23,40 +24,24 @@ export async function loginUser(username, password) {
 }
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(400).json({
-      error: 'Only POST requests are allowed on this route.',
+  apiHandler(
+    req,
+    res,
+    {
+      requiredBody: ['username', 'password'],
+      methods: ['POST'],
+      contentType: 'application/json',
       schema: loginSchema,
-    })
-  }
-
-  if (req.headers['content-type'] !== 'application/json') {
-    return res.json({ error: 'Only JSON is allowed.' })
-  }
-
-  const { username, password } = req.body
-
-  if (!username) {
-    return res.status(400).json({
-      error: 'Username is missing',
-      schema: loginSchema,
-    })
-  }
-
-  if (!password) {
-    return res.status(400).json({
-      error: 'Password is missing',
-      schema: loginSchema,
-    })
-  }
-	
-	const [token, error] = await loginUser(username, password);
-
-  if (error) {
-    return res.status(400).json({
-      error: error.message,
-    })
-  }
-
-  return res.status(200).json({ token })
+    },
+    async (req, res) => {
+      const { username, password } = req.body
+      const [token, error] = await loginUser(username, password)
+      if (error) {
+        return res.status(400).json({
+          error: error.message,
+        })
+      }
+      return res.status(200).json({ token })
+    }
+  )
 }
