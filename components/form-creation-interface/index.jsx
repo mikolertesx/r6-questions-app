@@ -48,6 +48,9 @@ const FormCreationInterface = ({ forms, updateForm }) => {
           >
             <strong>Add a Question +</strong>
           </button>
+          <button style={{ marginLeft: '16px' }}>
+            <strong>Save form</strong>
+          </button>
         </div>
       </div>
     </>
