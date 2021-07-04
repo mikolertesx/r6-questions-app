@@ -21,13 +21,18 @@ const userSchema = new Mongoose.Schema({
  * @returns {[data, error]}
  */
 userSchema.methods.login = async function (password) {
-  console.log(password, this.password)
   const passwordIsVerified = this.isPasswordCorrect(password)
   if (passwordIsVerified) {
     const jwtObject = { username: this.username, _id: this._id }
     const token = jwt.sign(jwtObject, passwordToken)
 
-    return [token, null]
+    return [
+      {
+        token,
+        userId: this._id,
+      },
+      null,
+    ]
   }
 
   return [null, new Error('Token was not verified.')]
@@ -70,7 +75,13 @@ userSchema.statics.createUser = async function (username, password) {
 
   const newToken = jwt.sign(jwtObject, passwordToken)
 
-  return [newToken, null]
+  return [
+    {
+      token: newToken,
+      userId: createdUser._id,
+    },
+    null,
+  ]
 }
 
 userSchema.statics.verifyToken = async function (token) {

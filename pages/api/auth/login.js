@@ -19,8 +19,8 @@ export async function loginUser(username, password) {
     return [null, new Error(`No user found with ${username}`)]
   }
 
-  const [token, error] = await foundUser.login(password)
-  return [token, error]
+  const [identification, error] = await foundUser.login(password)
+  return [identification, error]
 }
 
 export default async function handler(req, res) {
