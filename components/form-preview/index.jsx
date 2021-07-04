@@ -15,12 +15,13 @@ const FormPreview = ({ formId, title, removeForm }) => {
       </Link>
       <div className={styles.controls}>
         <VscPreview
+          className={styles['control-btn']}
           onClick={() => {
             router.push(`/preview/${formId}`)
           }}
         />
         <RiDeleteBin5Fill
-          className={styles['delete-btn']}
+          className={styles['control-btn']}
           onClick={() => {
             removeForm(formId)
           }}
