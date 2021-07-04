@@ -21,7 +21,6 @@ const userSchema = new Mongoose.Schema({
  * @returns {[data, error]}
  */
 userSchema.methods.login = async function (password) {
-  console.log(password, this.password)
   const passwordIsVerified = this.isPasswordCorrect(password)
   if (passwordIsVerified) {
     const jwtObject = { username: this.username, _id: this._id }
@@ -79,7 +78,7 @@ userSchema.statics.createUser = async function (username, password) {
   return [
     {
       token: newToken,
-      userId: this._id,
+      userId: createdUser._id,
     },
     null,
   ]
