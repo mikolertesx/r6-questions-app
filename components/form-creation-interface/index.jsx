@@ -1,56 +1,68 @@
 import { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { useRouter } from 'next/router'
+import { updateForm } from 'store/formsReducer'
 import QuestionGenerator from 'components/question-generator'
 import FormTitleInput from 'components/form-title-input'
 import styles from './styles.module.scss'
 import Navbar from 'components/landing-navbar'
 
-const FormCreationInterface = () => {
+const FormCreationInterface = ({ forms, updateForm }) => {
+  const {
+    query: { formId },
+  } = useRouter()
   const [formData, setFormData] = useState({
-    formName: '',
-    questions: [
-      {
-        type: 'OPEN',
-      },
-    ],
+    ...forms[formId],
   })
-  const [questionsTotal, setQuestionsTotal] = useState(1)
-
-  let questionsArray =
-    questionsTotal > 1 ? new Array(questionsTotal).fill('*') : ['*']
 
   useEffect(() => {
-    console.log(formData)
-  }, [formData])
+    updateForm({ formId, formData })
+  }, [formData, formId, updateForm])
 
   return (
     <>
-    <Navbar/>
-    <div className="interface-container">
-      <FormTitleInput setFormData={setFormData} formData={formData} />
-      {formData.questions.map((question, index) => (
-        <QuestionGenerator
-          key={`${formData.formName}-question-${index}`}
-          index={index}
-          setFormData={setFormData}
-          formData={formData}
-        />
-      ))}
-      <div className={styles['form-interface-controls']}>
-         <button onClick={() =>{
-           let newArray = [...formData.questions]
-           newArray.push({
-             type: 'OPEN'
-           })
-           setFormData({
-            ...formData,
-            questions: newArray,
-          })
-         }}>
-          <strong>Add a Question +</strong></button>
+      <Navbar />
+      <div className="interface-container">
+        <FormTitleInput setFormData={setFormData} formData={formData} />
+        {formData.questions.map((question, index) => (
+          <QuestionGenerator
+            key={`${formData.formTitle}-question-${index}`}
+            index={index}
+            setFormData={setFormData}
+            formData={formData}
+          />
+        ))}
+        <div className={styles['form-interface-controls']}>
+          <button
+            onClick={() => {
+              let newArray = [...formData.questions]
+              newArray.push({
+                type: 'OPEN',
+                questionText: '',
+              })
+              setFormData({
+                ...formData,
+                questions: newArray,
+              })
+            }}
+          >
+            <strong>Add a Question +</strong>
+          </button>
+        </div>
       </div>
-    </div>
     </>
   )
 }
 
-export default FormCreationInterface
+const MapStateToProps = ({ forms }) => ({
+  forms,
+})
+
+const MapDispatchToProps = (dispatch) => ({
+  updateForm: (formId) => dispatch(updateForm(formId)),
+})
+
+export default connect(
+  MapStateToProps,
+  MapDispatchToProps
+)(FormCreationInterface)
