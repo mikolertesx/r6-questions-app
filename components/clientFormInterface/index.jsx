@@ -35,6 +35,35 @@ const mockup = {
             type: "RANGE",
             rangeLimit: "99",
         },
+        {
+            questionText: "Que piensas del estado actual de enroute?",
+            type: "OPEN"    
+        },
+        {
+            questionText: "Que corte de carne prefieres?",
+            type: "MULTIPLE" ,  
+            options: {
+                option0: "Rib Eye",
+                option1: "T-Bone",
+                option2: "New York",
+            },
+        },
+        {
+            questionText: "Selecciona tus actividades favoritas",
+            type: "CHECKBOX" ,  
+            options: {
+                option0: "Musica",
+                option1: "Natacion",
+                option2: "Fotografia",
+                option3: "Baile",
+                option4: "Videojuegos",
+            },
+        },
+        {
+            questionText: "Cuantos años tienes?",
+            type: "RANGE",
+            rangeLimit: "99",
+        },
         
 
     ]
