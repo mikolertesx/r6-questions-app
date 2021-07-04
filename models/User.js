@@ -20,7 +20,8 @@ const userSchema = new Mongoose.Schema({
  * @param  {The password that was entered.} password
  * @returns {[data, error]}
  */
-userSchema.methods.login = function (password) {
+userSchema.methods.login = async function (password) {
+  console.log(password, this.password)
   const passwordIsVerified = this.isPasswordCorrect(password)
   if (passwordIsVerified) {
     const jwtObject = { username: this.username, _id: this._id }
