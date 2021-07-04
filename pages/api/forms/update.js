@@ -1,5 +1,5 @@
 import 'database'
-
+import { apiHandler } from 'next-api-simple-handler'
 import Form from 'models/Form'
 import Questions from 'models/Questions'
 
@@ -35,39 +35,29 @@ export const updateFormServer = async (formId, data) => {
 }
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.json({
-      error: 'This route only allows for POST requests.',
-    })
-  }
-
-  if (req.headers['content-type'] !== 'application/json') {
-    return res.json({ error: 'Only JSON is allowed.' })
-  }
-
-  const { id, form } = req.body
-
-  if (!id) {
-    return res.json({ error: 'No id was provided.', schema: updateFormSchema })
-  }
-
-  if (!form) {
-    return res.json({
-      error: 'No form field was provided',
+  apiHandler(
+    req,
+    res,
+    {
+      methods: ['POST'],
+      contentType: 'application/json',
+      requiredBody: ['id', 'form'],
       schema: updateFormSchema,
-    })
-  }
+    },
+    async (req, res) => {
+      const { id, form } = req.body
+      const [data, error] = await updateFormServer(id, form)
 
-  const [data, error] = await updateFormServer(id, form)
+      if (error) {
+        console.error(error)
+        return res.json({
+          error: "Couldn't update form",
+        })
+      }
 
-  if (error) {
-    console.error(error)
-    return res.json({
-      error: "Couldn't update form",
-    })
-  }
-
-  return res.json({
-    form: data,
-  })
+      return res.json({
+        form: data,
+      })
+    }
+  )
 }

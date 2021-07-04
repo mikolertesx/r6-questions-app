@@ -1,4 +1,5 @@
 import 'database'
+import { apiHandler } from 'next-api-simple-handler'
 import User from 'models/User'
 
 const registerSchema = {
@@ -12,57 +13,43 @@ export async function registerUser(username, password) {
 }
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(400).json({
-      error: 'Only POST requests are allowed on this route.',
+  apiHandler(
+    req,
+    res,
+    {
+      methods: ['POST'],
+      contentType: 'application/json',
+      requiredBody: ['username', 'password'],
       schema: registerSchema,
-    })
-  }
+    },
+    async (req, res) => {
+      const { username, password } = req.body
+      // Password verification.
+      if (password.trim().length === 0) {
+        return res.status(400).json({
+          error: 'Incorrect password format',
+          schema: registerSchema,
+        })
+      }
 
-  if (req.headers['content-type'] !== 'application/json') {
-    return res.json({ error: 'Only JSON is allowed.' })
-  }
+      if (password.length < 6) {
+        return res.status(400).json({
+          error: 'Password too short',
+        })
+      }
 
-  const { username, password } = req.body
+      const [token, error] = await registerUser(username, password)
 
-  if (!username) {
-    return res.status(400).json({
-      error: 'Username is missing',
-      schema: registerSchema,
-    })
-  }
+      if (error) {
+        return res.status(400).json({
+          error: error.message,
+          schema: registerSchema,
+        })
+      }
 
-  if (!password) {
-    return res.status(400).json({
-      error: 'Password is missing',
-      schema: registerSchema,
-    })
-  }
-
-  // Password verification.
-  if (password.trim().length === 0) {
-    return res.status(400).json({
-      error: 'Incorrect password format',
-      schema: registerSchema,
-    })
-  }
-
-  if (password.length < 6) {
-    return res.status(400).json({
-      error: 'Password too short',
-    })
-  }
-
-  const [token, error] = await registerUser(username, password)
-
-  if (error) {
-    return res.status(400).json({
-      error: error.message,
-      schema: registerSchema,
-    })
-  }
-
-  return res.status(200).json({
-    token,
-  })
+      return res.status(200).json({
+        token,
+      })
+    }
+  )
 }
