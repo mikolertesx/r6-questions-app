@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react'
+import style from './styles.module.scss'
 
 const QuestionCard = (props) => {
 
   const [question, setQuestion] = useState(props.question)
 
-  console.log(props.question)
-
-
   if (question.type === "OPEN") {
       
       return (
-        <div>
-          <h1>{`${question.questionText}`}</h1>
+        <div className={style.question}>
+          <h2>{`${question.questionText}`}</h2>
           <input placeholder="Enter your answer here"></input>
         </div>
       )
@@ -20,13 +18,13 @@ const QuestionCard = (props) => {
   if (question.type === "MULTIPLE") {
       
     return (
-      <div>
-        <h1>{`${question.questionText}`}</h1>
+      <div  className={style.question}>
+        <h2>{`${question.questionText}`}</h2>
         <label> Pick an option</label>
         <form>
             {Object.values(question.options).map((option, index)=>{
                return <>
-                <input key={index} name={question.questionText} type="radio"/><label key={`l-${index}`}>{option}</label>
+                <input className={style.option} key={index} name={question.questionText} type="radio"/><label key={`l-${index}`}>{option}</label>
                 </>
             })}
         </form>
@@ -37,13 +35,13 @@ const QuestionCard = (props) => {
 if (question.type === "CHECKBOX") {
       
     return (
-      <div>
-         <h1>{`${question.questionText}`}</h1>
+      <div  className={style.question}>
+         <h2>{`${question.questionText}`}</h2>
         <label> Pick one or more options</label>
         <div>
             {Object.values(question.options).map((option, index)=>{
                return <>
-                <input key={index} type="checkbox"/><label key={`l-${index}`}>{option}</label>
+                <input className={style.option} key={index} type="checkbox"/><label key={`l-${index}`}>{option}</label>
                 </>
             })}
         </div>
@@ -54,8 +52,8 @@ if (question.type === "CHECKBOX") {
 if (question.type === "RANGE") {
       
     return (
-      <div>
-        <h1>{`${question.questionText}`}</h1>
+      <div  className={style.question}>
+        <h2>{`${question.questionText}`}</h2>
         <input type="number" min="0" max={question.rangeLimit}/>
       </div>
     )
