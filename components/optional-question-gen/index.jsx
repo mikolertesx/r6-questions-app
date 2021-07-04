@@ -3,32 +3,34 @@ import ButtonControls from 'components/button-controls'
 import styles from './styles.module.scss'
 
 const OptionalQuestionGen = ({ setData, questionData }) => {
-  const [optionsTotal, setOptionsTotal] = useState(0)
-  const [optionsTexts, setOptionsTexts] = useState({})
+  const optionsArray = questionData.options || ['']
+  const textValue = questionData.questionText || ''
+  const [options, setOptions] = useState(optionsArray)
 
-  let optionsArray = optionsTotal > 0 ? new Array(optionsTotal).fill('*') : []
+  const addOption = () => {
+    const newOptions = [...options]
+    newOptions.push('')
+    setOptions(newOptions)
+  }
 
-  useEffect(() => {
-    const currentTotalOptions = Object.keys(optionsTexts).length
-    if (currentTotalOptions > optionsTotal) {
-      for (let i = optionsTotal; i < currentTotalOptions; i++) {
-        const newOptionsObj = {
-          ...optionsTexts,
-        }
-        delete newOptionsObj[`option-${i}`]
-        setOptionsTexts(newOptionsObj)
-      }
-    }
-  }, [optionsTotal, optionsTexts])
+  const removeOption = () => {
+    const newOptions = [...options]
+    newOptions.pop()
+    setOptions(newOptions)
+  }
+
+  const handleOptionChange = (string, index) => {
+    const newOptions = [...options]
+    newOptions[index] = string
+    setOptions(newOptions)
+  }
 
   useEffect(() => {
     setData({
       ...questionData,
-      options: {
-        ...optionsTexts,
-      },
+      options,
     })
-  }, [optionsTexts])
+  }, [options])
 
   return (
     <div className={styles['question-gen-container']}>
@@ -39,33 +41,27 @@ const OptionalQuestionGen = ({ setData, questionData }) => {
         onChange={(e) =>
           setData({ ...questionData, questionText: e.target.value })
         }
+        value={textValue}
       />
       <div className={styles['options-container']}>
         <label className={styles.label} htmlFor="">
           Add the options that you need
         </label>
-        {optionsArray.map((option, index) => (
+        {options.map((option, index) => (
           <input
             className={styles.input}
             key={`option-input-${index}`}
             type="text"
-            value={optionsTexts[`option-${index}`] || ''}
+            value={option}
             onChange={(e) => {
-              setOptionsTexts({
-                ...optionsTexts,
-                [`option-${index}`]: e.target.value,
-              })
+              handleOptionChange(e.target.value, index)
             }}
           />
         ))}
         <div>
           <ButtonControls
-            addFn={() => setOptionsTotal(optionsTotal + 1)}
-            subtractFn={() => {
-              if (optionsTotal > 0) {
-                setOptionsTotal(optionsTotal - 1)
-              }
-            }}
+            addFn={addOption}
+            subtractFn={removeOption}
             addText="Add option"
             subtractText="Remove option"
           />
