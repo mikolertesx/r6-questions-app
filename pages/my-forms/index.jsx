@@ -3,10 +3,18 @@ import { addForm } from 'store/formsReducer'
 import FormPreview from 'components/form-preview'
 import styles from './styles.module.scss'
 import Navbar from 'components/landing-navbar'
+import { useRouter } from 'next/router'
 
-const MyFormsPage = ({ forms, addForm }) => {
+const MyFormsPage = ({ user, forms, addForm }) => {
+
+  const router = new useRouter()
+
   const addNewForm = () => {
     addForm()
+  }
+  if (!user.username) {
+      router.push('/')
+      return null
   }
   return (
     <>
@@ -32,11 +40,13 @@ const MyFormsPage = ({ forms, addForm }) => {
         </button>
       </div>
     </>
+   
   )
 }
 
-const MapStateToProps = ({ forms }) => ({
+const MapStateToProps = ({ forms, user }) => ({
   forms,
+  user
 })
 
 const MapDispatchToProps = (dispatch) => ({
