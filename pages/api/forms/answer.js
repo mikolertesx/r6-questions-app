@@ -29,6 +29,11 @@ export default async function handler(req, res) {
     async (req, res) => {
       const { id, answer } = req.body
       const form = await Form.findById(id)
+      if (!form) {
+        return res.status(404).json({
+          error: "Form wasn't found",
+        })
+      }
       const [result, error] = await form.addAnswer(answer)
       if (error) {
         return res.json({
@@ -37,7 +42,7 @@ export default async function handler(req, res) {
         })
       }
       return res.json({
-        result,
+        data,
       })
     }
   )
