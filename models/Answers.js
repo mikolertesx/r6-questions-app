@@ -1,7 +1,11 @@
 import mongoose from 'mongoose'
 
 const answerSchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: 'string',
+    required: false,
+    default: "Anonymous"
+  },
   form: { type: mongoose.Types.ObjectId, ref: 'Form' },
   answers: [ String ]
 })
