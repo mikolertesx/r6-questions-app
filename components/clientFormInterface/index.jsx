@@ -42,8 +42,13 @@ const mockup = {
 const ClientFormInterface = ({ isPreview, forms }) => {
   const [questions, setQuestions] = useState([])
   const [formTitle, setFormTitle] = useState('')
+  const [answers, setAnswers] = useState({})
   const router = useRouter()
   const { formId } = router.query
+
+  useEffect(() => {
+    console.log(answers)
+  }, [answers])
 
   useEffect(() => {
     if (isPreview && forms[formId]) {
@@ -52,10 +57,6 @@ const ClientFormInterface = ({ isPreview, forms }) => {
       setFormTitle(formTitle)
     }
   }, [formId, isPreview, forms])
-
-  useEffect(() => {
-    console.log(questions)
-  }, [questions])
 
   return (
     <div className={styles.clientForm}>
@@ -70,6 +71,8 @@ const ClientFormInterface = ({ isPreview, forms }) => {
             <QuestionCard
               key={`form-question-${index}`}
               question={questionToRender}
+              answers={answers}
+              setAnswers={setAnswers}
             />
           )
         })}

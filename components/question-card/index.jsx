@@ -2,13 +2,47 @@ import { useEffect, useState } from 'react'
 import style from './styles.module.scss'
 
 const QuestionCard = (props) => {
-  const [question, setQuestion] = useState(props.question)
+  const { question, answers, setAnswers } = props
+
+  const handleInput = (e) => {
+    const newAnswers = {
+      ...answers,
+      [question.text]: e.target.value,
+    }
+    setAnswers(newAnswers)
+  }
+
+  const handleMultipleInput = (e) => {
+    const { value } = e.target
+    let newArray = []
+    if (!answers[question.text]) {
+      newArray.push(value)
+    } else {
+      newArray = [...answers[question.text]]
+      if (!newArray.includes(value)) {
+        newArray.push(value)
+      } else {
+        newArray = newArray.filter((currentValue) => currentValue !== value)
+      }
+    }
+
+    const newAnswers = {
+      ...answers,
+      [question.text]: newArray,
+    }
+    setAnswers(newAnswers)
+  }
 
   if (question.type === 'OPEN') {
     return (
       <div className={style.question}>
         <h2>{`${question.text}`}</h2>
-        <input placeholder="Enter your answer here"></input>
+        <input
+          onChange={(e) => {
+            handleInput(e)
+          }}
+          placeholder="Enter your answer here"
+        ></input>
       </div>
     )
   }
@@ -27,6 +61,10 @@ const QuestionCard = (props) => {
                   key={index}
                   name={question.text}
                   type="radio"
+                  onChange={(e) => {
+                    handleInput(e)
+                  }}
+                  value={option}
                 />
                 <label key={`l-${index}`}>{option}</label>
               </>
@@ -46,7 +84,15 @@ const QuestionCard = (props) => {
           {Object.values(question.options).map((option, index) => {
             return (
               <>
-                <input className={style.option} key={index} type="checkbox" />
+                <input
+                  className={style.option}
+                  key={index}
+                  type="checkbox"
+                  onChange={(e) => {
+                    handleMultipleInput(e)
+                  }}
+                  value={option}
+                />
                 <label key={`l-${index}`}>{option}</label>
               </>
             )
@@ -60,7 +106,14 @@ const QuestionCard = (props) => {
     return (
       <div className={style.question}>
         <h2>{`${question.text}`}</h2>
-        <input type="number" min="0" max={question.rangeLimit} />
+        <input
+          type="number"
+          min="0"
+          max={question.rangeLimit}
+          onChange={(e) => {
+            handleInput(e)
+          }}
+        />
       </div>
     )
   }
