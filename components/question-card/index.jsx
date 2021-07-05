@@ -7,7 +7,7 @@ const QuestionCard = (props) => {
   if (question.type === 'OPEN') {
     return (
       <div className={style.question}>
-        <h2>{`${question.questionText}`}</h2>
+        <h2>{`${question.text}`}</h2>
         <input placeholder="Enter your answer here"></input>
       </div>
     )
@@ -16,7 +16,7 @@ const QuestionCard = (props) => {
   if (question.type === 'MULTIPLE') {
     return (
       <div className={style.question}>
-        <h2>{`${question.questionText}`}</h2>
+        <h2>{`${question.text}`}</h2>
         <label> Pick an option</label>
         <form>
           {Object.values(question.options).map((option, index) => {
@@ -25,7 +25,7 @@ const QuestionCard = (props) => {
                 <input
                   className={style.option}
                   key={index}
-                  name={question.questionText}
+                  name={question.text}
                   type="radio"
                 />
                 <label key={`l-${index}`}>{option}</label>
@@ -40,7 +40,7 @@ const QuestionCard = (props) => {
   if (question.type === 'CHECKBOX') {
     return (
       <div className={style.question}>
-        <h2>{`${question.questionText}`}</h2>
+        <h2>{`${question.text}`}</h2>
         <label> Pick one or more options</label>
         <div>
           {Object.values(question.options).map((option, index) => {
@@ -59,7 +59,7 @@ const QuestionCard = (props) => {
   if (question.type === 'RANGE') {
     return (
       <div className={style.question}>
-        <h2>{`${question.questionText}`}</h2>
+        <h2>{`${question.text}`}</h2>
         <input type="number" min="0" max={question.rangeLimit} />
       </div>
     )

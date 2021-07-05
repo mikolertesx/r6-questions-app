@@ -11,10 +11,8 @@ const OpenQuestionGen = ({ setData, questionData }) => {
       <input
         className={styles.input}
         type="text"
-        onChange={(e) =>
-          setData({ ...questionData, questionText: e.target.value })
-        }
-        value={questionData.questionText}
+        onChange={(e) => setData({ ...questionData, text: e.target.value })}
+        value={questionData.text}
       />
     </div>
   )
