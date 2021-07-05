@@ -9,11 +9,11 @@ const mockup = {
   formName: 'Mockup form',
   questions: [
     {
-      questionText: 'Que piensas del estado actual de enroute?',
+      text: 'Que piensas del estado actual de enroute?',
       type: 'OPEN',
     },
     {
-      questionText: 'Que corte de carne prefieres?',
+      text: 'Que corte de carne prefieres?',
       type: 'MULTIPLE',
       options: {
         option0: 'Rib Eye',
@@ -22,7 +22,7 @@ const mockup = {
       },
     },
     {
-      questionText: 'Selecciona tus actividades favoritas',
+      text: 'Selecciona tus actividades favoritas',
       type: 'CHECKBOX',
       options: {
         option0: 'Musica',
@@ -33,7 +33,7 @@ const mockup = {
       },
     },
     {
-      questionText: 'Cuantos años tienes?',
+      text: 'Cuantos años tienes?',
       type: 'RANGE',
       rangeLimit: '99',
     },
