@@ -6,8 +6,7 @@ import Navbar from 'components/landing-navbar'
 
 const MyFormsPage = ({ forms, addForm }) => {
   const addNewForm = () => {
-    const index = Math.random()
-    addForm(index)
+    addForm()
   }
   return (
     <>

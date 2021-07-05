@@ -8,8 +8,8 @@ const registerSchema = {
 }
 
 export async function registerUser(username, password) {
-  const [token, error] = await User.createUser(username, password)
-  return [token, error]
+  const [identification, error] = await User.createUser(username, password)
+  return [identification, error]
 }
 
 export default async function handler(req, res) {
@@ -47,9 +47,7 @@ export default async function handler(req, res) {
         })
       }
 
-      return res.status(200).json({
-        token,
-      })
+      return res.status(200).json(token)
     }
   )
 }
