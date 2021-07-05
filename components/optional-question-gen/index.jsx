@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 
 const OptionalQuestionGen = ({ setData, questionData }) => {
   const optionsArray = questionData.options || ['']
-  const textValue = questionData.questionText || ''
+  const textValue = questionData.text || ''
   const [options, setOptions] = useState(optionsArray)
 
   const addOption = () => {
@@ -38,9 +38,7 @@ const OptionalQuestionGen = ({ setData, questionData }) => {
       <input
         type="text"
         className={styles.input}
-        onChange={(e) =>
-          setData({ ...questionData, questionText: e.target.value })
-        }
+        onChange={(e) => setData({ ...questionData, text: e.target.value })}
         value={textValue}
       />
       <div className={styles['options-container']}>

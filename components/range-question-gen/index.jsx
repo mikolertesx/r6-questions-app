@@ -2,16 +2,14 @@ import styles from './styles.module.scss'
 
 const RangeQuestionGen = ({ setData, questionData }) => {
   const rangeValue = questionData.rangeLimit || ''
-  const textValue = questionData.questionText || ''
+  const textValue = questionData.text || ''
   return (
     <div className={styles['question-gen-container']}>
       <label className={styles.label}>Add your question</label>
       <input
         className={styles.input}
         type="text"
-        onChange={(e) =>
-          setData({ ...questionData, questionText: e.target.value })
-        }
+        onChange={(e) => setData({ ...questionData, text: e.target.value })}
         value={textValue}
       />
       <label className={styles.label} htmlFor="">

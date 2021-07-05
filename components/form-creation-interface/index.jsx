@@ -58,7 +58,7 @@ const FormCreationInterface = ({ forms, updateForm }) => {
               let newArray = [...formData.questions]
               newArray.push({
                 type: 'OPEN',
-                questionText: '',
+                text: '',
               })
               setFormData({
                 ...formData,
