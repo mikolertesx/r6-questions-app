@@ -46,17 +46,29 @@ const ClientFormInterface = ({ isPreview, forms }) => {
   const router = useRouter()
   const { formId } = router.query
 
-  useEffect(() => {
-    console.log(answers)
-  }, [answers])
+  const fetchQuestions = async () => {
+    if (formId) {
+      const response = await fetch(`http://localhost:3000/api/forms/${formId}`)
+      const parsedData = await response.json()
+      const { data } = parsedData
+      setQuestions(data.questions)
+      setFormTitle(data.formTitle)
+    }
+  }
 
   useEffect(() => {
     if (isPreview && forms[formId]) {
       const { questions, formTitle } = forms[formId]
       setQuestions(questions)
       setFormTitle(formTitle)
+    } else {
+      fetchQuestions()
     }
-  }, [formId, isPreview, forms])
+  })
+
+  useEffect(() => {
+    console.log('answers', answers)
+  }, [answers])
 
   return (
     <div className={styles.clientForm}>

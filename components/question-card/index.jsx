@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import style from './styles.module.scss'
 
 const QuestionCard = (props) => {
@@ -55,10 +54,9 @@ const QuestionCard = (props) => {
         <form>
           {Object.values(question.options).map((option, index) => {
             return (
-              <>
+              <div key={`${question.text}-multiple-${index}`}>
                 <input
                   className={style.option}
-                  key={index}
                   name={question.text}
                   type="radio"
                   onChange={(e) => {
@@ -66,8 +64,8 @@ const QuestionCard = (props) => {
                   }}
                   value={option}
                 />
-                <label key={`l-${index}`}>{option}</label>
-              </>
+                <label>{option}</label>
+              </div>
             )
           })}
         </form>
@@ -83,18 +81,17 @@ const QuestionCard = (props) => {
         <div>
           {Object.values(question.options).map((option, index) => {
             return (
-              <>
+              <div key={`${question.text}-checkbox-${index}`}>
                 <input
                   className={style.option}
-                  key={index}
                   type="checkbox"
                   onChange={(e) => {
                     handleMultipleInput(e)
                   }}
                   value={option}
                 />
-                <label key={`l-${index}`}>{option}</label>
-              </>
+                <label>{option}</label>
+              </div>
             )
           })}
         </div>

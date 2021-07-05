@@ -1,17 +1,13 @@
-import React from 'react';
+import React from 'react'
 import { useRouter } from 'next/router'
-import ClientFormInterface from 'components/clientFormInterface';
+import ClientFormInterface from 'components/clientFormInterface'
 
 const UserFormView = () => {
-    const router = useRouter()
-    const { formId } = router.query
-    
-
-    return (
-        <div>
-            <ClientFormInterface/>
-        </div>
-    );
+  return (
+    <div>
+      <ClientFormInterface />
+    </div>
+  )
 }
 
-export default UserFormView;
+export default UserFormView
