@@ -19,3 +19,16 @@ $flame: #DE541E;
     }
     
 }
+
+.form-interface-controls{
+    button{
+        padding: 1rem;
+        border-radius: 3px;
+        min-width: 20px;
+        margin: 30px;
+        background-color: #DE541E;
+        border-style: none;
+        color: white;
+        box-shadow: 5px 5px 0px black;
+    }
+}

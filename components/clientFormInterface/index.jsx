@@ -56,6 +56,25 @@ const ClientFormInterface = ({ isPreview, forms }) => {
     }
   }
 
+  const sendAnswers = async () => {
+    try {
+      const body = JSON.stringify({
+        answer: answers,
+        id: formId
+      })
+      const response = await fetch('http://localhost:3000/api/forms/answer', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body
+      })
+      const json = await response.json()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     if (isPreview && forms[formId]) {
       const { questions, formTitle } = forms[formId]
@@ -89,6 +108,12 @@ const ClientFormInterface = ({ isPreview, forms }) => {
           )
         })}
       </div>
+      <div className={styles['form-interface-controls']}>
+        <button onClick={sendAnswers}>
+          <strong>Finish and Upload Answers</strong>
+        </button>
+      </div>
+      
     </div>
   )
 }
