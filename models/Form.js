@@ -5,6 +5,10 @@ import Answers from 'models/Answers'
 
 const formSchema = new mongoose.Schema({
   author: mongoose.Types.ObjectId,
+	formTitle: {
+		type: 'string',
+		required: false
+	},
   questions: [{ type: mongoose.Types.ObjectId, ref: 'Question' }],
 })
 
