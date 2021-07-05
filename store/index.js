@@ -1,4 +1,16 @@
-import { reducers } from './rootReducer'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import { persistReducer, persistStore } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+import thunk from 'redux-thunk'
 
-export const store = createStore(reducers)
+import { reducers } from './rootReducer'
+
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, reducers)
+
+export const store = createStore(persistedReducer, applyMiddleware(thunk))
+export const persistor = persistStore(store)
