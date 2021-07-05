@@ -12,8 +12,19 @@ export default async function handler(req, res) {
     async (req, res) => {
       const { userId } = req.query
       const user = await User.findById(userId)
-      const result = await user.findForms()
-      return res.json(result)
+      if (!user) {
+        return res.status(404).json({
+          error: 'User was not found',
+        })
+      }
+      try {
+        const result = await user.findForms()
+        return res.json(result)
+      } catch (err) {
+        return res.status(404).json({
+          error: "Can't find user forms.",
+        })
+      }
     }
   )
 }
