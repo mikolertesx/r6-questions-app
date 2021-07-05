@@ -15,6 +15,26 @@ const FormCreationInterface = ({ forms, updateForm }) => {
     ...forms[formId],
   })
 
+  const saveForm = async () => {
+    try {
+      const body = JSON.stringify({
+        id: formId,
+        form: formData,
+      })
+      const response = await fetch('http://localhost:3000/api/forms/update', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body,
+      })
+      const data = await response.json()
+      console.log(data)
+    } catch (err) {
+      console.warn(err)
+    }
+  }
+
   useEffect(() => {
     updateForm({ formId, formData })
   }, [formData, formId, updateForm])
@@ -48,7 +68,7 @@ const FormCreationInterface = ({ forms, updateForm }) => {
           >
             <strong>Add a Question +</strong>
           </button>
-          <button style={{ marginLeft: '16px' }}>
+          <button onClick={saveForm} style={{ marginLeft: '16px' }}>
             <strong>Save form</strong>
           </button>
         </div>
