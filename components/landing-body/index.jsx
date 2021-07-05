@@ -13,6 +13,7 @@ const Body = (props) => {
   //Hooks
   const [credential, setCredential] = useState({
     username: '',
+    password: '',
   })
   const [statusAuth, setStatusAuth] = useState('')
   const [passwordValid, setpasswordValid] = useState(true)
@@ -29,7 +30,6 @@ const Body = (props) => {
   const credentialHandler = (event) => {
     setStatusAuth('')
     setCredential({ ...credential, [event.target.name]: event.target.value })
-    console.log(credential)
   }
 
   const authHandler = (event) => {
@@ -42,10 +42,17 @@ const Body = (props) => {
         .then((res) => res.json())
         .catch((error) => console.log(error))
         .then((response) => {
-          subscribeUser({
-            ...response.token,
-            username: credential.username,
-          })
+            if (response.data) {
+            subscribeUser({
+                ...response.data,
+                username: credential.username,
+            })}
+            if(response.token){
+                subscribeUser({
+                    ...response,
+                    username: credential.username,
+                })
+            }
           router.push('/my-forms')
         })
     } else {
@@ -138,6 +145,7 @@ const Body = (props) => {
             placeholder="**********"
             onChange={credentialHandler}
             name="password"
+            value={credential.password}
           ></input>
           <label>Confirm your password</label>
           <input

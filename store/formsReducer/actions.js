@@ -19,3 +19,7 @@ export const updateForm = (formData) => ({
   type: FORM_TYPES.UPDATE_FORM,
   payload: formData,
 })
+
+export const cleanForms = () => ({
+  type: FORM_TYPES.CLEAN_FORMS,
+})

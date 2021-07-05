@@ -24,6 +24,8 @@ export const formsReducer = (state = initialState, action) => {
         ...state,
         [formId]: formData,
       }
+      case FORM_TYPES.CLEAN_FORMS:
+      return {}
     default:
       return state
   }

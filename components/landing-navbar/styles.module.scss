@@ -26,4 +26,12 @@
     .Signup{
         background-color: #DE541E;
     }
+    .logoutdiv{
+        display: flex;
+        align-items: center;
+        .Signup{
+            background-color: #DE541E;
+            height: 2.5rem;
+        }
+    }
 }

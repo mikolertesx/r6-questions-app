@@ -1,10 +1,16 @@
 import { connect } from 'react-redux'
+import { cleanForms } from 'store/formsReducer'
 import { unsubscribeUser } from 'store/userReducer'
 import Link from 'next/Link'
 import styles from './styles.module.scss'
+import { useRouter } from 'next/router'
+
 
 const Navbar = (props) => {
-  const { user, unsubscribeUser } = props
+  const router = new useRouter()
+
+  const { user, unsubscribeUser, cleanForms } = props
+
   function loginHandler() {
     props.handleLogin('Login')
   }
@@ -26,12 +32,14 @@ const Navbar = (props) => {
           </button>
         </div>
       ) : (
-        <div>
-          <h1>{` Hola ${user.username}`} </h1>
+        <div className={styles.logoutdiv}>
+          <h1>{` Hi, ${user.username}`} </h1>
           <button
             className={styles.Signup}
             onClick={() => {
               unsubscribeUser()
+              cleanForms()
+              router.push('/')
             }}
           >
             Log out
@@ -48,6 +56,7 @@ const mapStateToProps = ({ user }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   unsubscribeUser: () => dispatch(unsubscribeUser()),
+  cleanForms: () => dispatch(cleanForms()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
