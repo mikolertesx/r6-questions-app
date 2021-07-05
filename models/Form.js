@@ -10,8 +10,21 @@ const formSchema = new mongoose.Schema({
     required: false,
   },
   questions: [{ type: mongoose.Types.ObjectId, ref: 'Question' }],
-  answers: {},
+  answers: {
+    type: [{}],
+    default: [],
+  },
 })
+
+formSchema.methods.addAnswer = async function (answer) {
+  try {
+    this.answers.push(answer)
+    const result = await this.save()
+    return [result, null]
+  } catch (error) {
+    return [null, new Error(`Couldn't add answer to the form ${this._id}`)]
+  }
+}
 
 formSchema.methods.clientsAnswers = async function () {
   const answer = await Answers.find({ form: this._id }).exec()

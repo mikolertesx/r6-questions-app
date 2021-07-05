@@ -30,8 +30,7 @@ export const getAnswers = async (formId) => {
     if (!form) {
       return [null, new Error("Couldn't find Form.")]
     }
-
-    const answers = await form.clientsAnswers()
+    const answers = form.answers
     return [answers, null]
   } catch (err) {
     console.error(err)
@@ -59,7 +58,7 @@ const createQuestionRoute = async (req, res) => {
   const { method } = req
   const { slug } = req.query
   const [id, action] = slug
-	
+
   if (action !== 'add-question' && action !== 'see-answers') {
     return res.json({ error: `You can\'t use action "${action}"` })
   }
