@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useRouter } from 'next/router'
 import QuestionCard from 'components/question-card'
-import { GiConsoleController } from 'react-icons/gi'
 import styles from './styles.module.scss'
 
 const mockup = {

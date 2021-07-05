@@ -1,15 +1,22 @@
 import styles from './styles.module.scss'
+import Link from 'next/Link'
 
 
-const Navbar = () => {
+const Navbar = (props) => {
+  function loginHandler(){
+    props.handleLogin("Login")
+ }
+ function signupHandler(){
+    props.handleLogin("Signup")
+ }
   return (
     <navbar className={styles.Navbar}>
           <div>
-            <a href="/"><h1>ENROUTE FORMS</h1></a>
+            <Link href="/"><h1>ENROUTE FORMS</h1></Link>
           </div>
           <div>
-            <button>Login</button>
-            <button className={styles.Signup}>Sign Up</button>
+            <button onClick={loginHandler}>Login</button>
+            <button className={styles.Signup} onClick={signupHandler}>Sign Up</button>
           </div>
     </navbar>
   )
