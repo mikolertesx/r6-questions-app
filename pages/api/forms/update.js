@@ -8,17 +8,18 @@ const updateFormSchema = {
   form: '[Form Object] The data of the form, just use the same format when you request it, it will be used to spread the data across each object.',
 }
 
-export const updateFormServer = async (formId, data) => {
+export const updateFormServer = async (formId, formData) => {
   try {
     const form = await Form.findOneAndUpdate(
       { _id: formId },
       {
-        author: data.author,
-        formTitle: data.formTitle,
+        author: formData.author,
+        formTitle: formData.formTitle,
+        answers: formData.answers,
       }
     )
 
-    data.questions.forEach(async (question) => {
+    formData.questions.forEach(async (question) => {
       if (question._id) {
         await Questions.findOneAndUpdate({ _id: question._id }, question)
       } else {
