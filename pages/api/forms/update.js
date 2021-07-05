@@ -15,7 +15,7 @@ export const updateFormServer = async (formId, formData) => {
       {
         author: formData.author,
         formTitle: formData.formTitle,
-        answers: formData.answers,
+        // answers: formData.answers,
       }
     )
 
