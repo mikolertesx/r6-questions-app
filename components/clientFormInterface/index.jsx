@@ -113,7 +113,7 @@ const ClientFormInterface = ({ isPreview, forms }) => {
       </div>
       {!isPreview && (
         <div className={styles['form-interface-controls']}>
-          <Link>
+          <Link href="/thanks">
             <button onClick={sendAnswers}>
               <strong>Finish and Upload Answers</strong>
             </button>
