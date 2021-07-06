@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { useRouter } from 'next/router'
 import QuestionCard from 'components/question-card'
 import styles from './styles.module.scss'
+import Link from 'next/Link'
 
 const mockup = {
   formName: 'Mockup form',
@@ -46,17 +47,38 @@ const ClientFormInterface = ({ isPreview, forms }) => {
   const router = useRouter()
   const { formId } = router.query
 
-  const fetchQuestions = async () => {
-    if (formId) {
-      const response = await fetch(`http://localhost:3000/api/forms/${formId}`)
-      const parsedData = await response.json()
-      const { data } = parsedData
-      setQuestions(data.questions)
-      setFormTitle(data.formTitle)
+  const sendAnswers = async () => {
+    try {
+      const body = JSON.stringify({
+        answer: answers,
+        id: formId,
+      })
+      const response = await fetch('http://localhost:3000/api/forms/answer', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body,
+      })
+      const json = await response.json()
+    } catch (error) {
+      console.log(error)
     }
   }
 
   useEffect(() => {
+    const fetchQuestions = async () => {
+      if (formId) {
+        const response = await fetch(
+          `http://localhost:3000/api/forms/${formId}`
+        )
+        const parsedData = await response.json()
+        const { data } = parsedData
+        console.log(data)
+        setQuestions(data.questions)
+        setFormTitle(data.formTitle)
+      }
+    }
     if (isPreview && forms[formId]) {
       const { questions, formTitle } = forms[formId]
       setQuestions(questions)
@@ -64,7 +86,7 @@ const ClientFormInterface = ({ isPreview, forms }) => {
     } else {
       fetchQuestions()
     }
-  })
+  }, [formId, forms, isPreview])
 
   useEffect(() => {
     console.log('answers', answers)
@@ -89,6 +111,16 @@ const ClientFormInterface = ({ isPreview, forms }) => {
           )
         })}
       </div>
+      {!isPreview && (
+        <div className={styles['form-interface-controls']}>
+          <Link>
+            <button onClick={sendAnswers}>
+              <strong>Finish and Upload Answers</strong>
+            </button>
+          </Link>
+          
+        </div>
+      )}
     </div>
   )
 }

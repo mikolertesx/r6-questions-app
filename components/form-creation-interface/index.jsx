@@ -7,7 +7,7 @@ import FormTitleInput from 'components/form-title-input'
 import styles from './styles.module.scss'
 import Navbar from 'components/landing-navbar'
 
-const FormCreationInterface = ({ forms, updateForm }) => {
+const FormCreationInterface = ({ forms, user, updateForm }) => {
   const {
     query: { formId },
   } = useRouter()
@@ -23,19 +23,18 @@ const FormCreationInterface = ({ forms, updateForm }) => {
     setSaved("Save Form")
    }, 5000);
     try {
+      formData.author = user.userId
       const body = JSON.stringify({
         id: formId,
         form: formData,
       })
-      const response = await fetch('http://localhost:3000/api/forms/update', {
+      await fetch('http://localhost:3000/api/forms/update', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
         },
         body,
       })
-      const data = await response.json()
-      console.log(data)
     } catch (err) {
       console.warn(err)
     }
@@ -83,8 +82,9 @@ const FormCreationInterface = ({ forms, updateForm }) => {
   )
 }
 
-const MapStateToProps = ({ forms }) => ({
+const MapStateToProps = ({ forms, user }) => ({
   forms,
+  user,
 })
 
 const MapDispatchToProps = (dispatch) => ({

@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import Mongoose from 'mongoose'
+import Form from './Form'
 
 const passwordToken = process.env.privateKey || 'place-holder-key'
 
@@ -14,6 +15,11 @@ const userSchema = new Mongoose.Schema({
   username: 'string',
   password: 'string',
 })
+
+userSchema.methods.findForms = async function () {
+  const relatedForms = await Form.find({ author: this._id }).exec()
+  return relatedForms
+}
 
 /**
  * Logs the user in with the password, and if it matches, it returns a token.

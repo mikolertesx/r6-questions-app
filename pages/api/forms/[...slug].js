@@ -30,8 +30,7 @@ export const getAnswers = async (formId) => {
     if (!form) {
       return [null, new Error("Couldn't find Form.")]
     }
-
-    const answers = await form.clientsAnswers()
+    const answers = form.answers
     return [answers, null]
   } catch (err) {
     console.error(err)
@@ -55,12 +54,16 @@ const findFormRoute = async (req, res) => {
   }
 }
 
-const createQuestionRoute = async (req, res) => {
+const actionedRoute = async (req, res) => {
   const { method } = req
   const { slug } = req.query
   const [id, action] = slug
-	
-  if (action !== 'add-question' && action !== 'see-answers') {
+
+  if (
+    action !== 'add-question' &&
+    action !== 'see-answers' &&
+    action !== 'delete-form'
+  ) {
     return res.json({ error: `You can\'t use action "${action}"` })
   }
 
@@ -91,6 +94,30 @@ const createQuestionRoute = async (req, res) => {
       }
 
       return res.json(answersData)
+    case 'delete-form':
+      if (method !== 'GET') {
+        return res.json({
+          error: 'This route only allows for get the get method.',
+        })
+      }
+
+      try {
+        const result = await Form.deleteOne({ _id: id })
+        if (result.deletedCount === 0) {
+          return res.status(200).json({
+            message: 'No form with that ID was deleted.',
+            data: result,
+          })
+        }
+        return res.status(200).json({
+          message: 'Succesfully deleted',
+          data: result,
+        })
+      } catch (err) {
+        return res.status(500).json({
+          error: "Couldn't delete Form",
+        })
+      }
   }
 }
 
@@ -130,7 +157,7 @@ export default async function handler(req, res) {
   }
 
   if (slug.length === 2) {
-    return createQuestionRoute(req, res)
+    return actionedRoute(req, res)
   }
 
   if (slug.length === 3) {
