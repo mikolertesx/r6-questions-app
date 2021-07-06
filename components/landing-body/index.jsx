@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { connect } from 'react-redux'
 import { subscribeUser } from 'store/userReducer'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import styles from './styles.module.scss'
 import launch from './Browsing.svg'
 import survey from './undraw.svg'
@@ -10,7 +11,6 @@ import customer from './Customer.svg'
 const Body = (props) => {
   //
   const { subscribeUser, user } = props
-
 
   //Hooks
   const [credential, setCredential] = useState({
@@ -34,44 +34,37 @@ const Body = (props) => {
   }
 
   const authHandler = (event) => {
-      fetch(`http://localhost:3000/api/auth/${event.target.name}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(credential),
+    fetch(`http://localhost:3000/api/auth/${event.target.name}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credential),
+    })
+      .then((res) => res.json())
+      .catch((error) => console.log(error))
+      .then((response) => {
+        if (response.data) {
+          subscribeUser({
+            ...response.data,
+            username: credential.username,
+          })
+          router.push('/my-forms')
+        }
+        if (response.token) {
+          subscribeUser({
+            ...response,
+            username: credential.username,
+          })
+          router.push('/my-forms')
+        } else {
+          setStatusAuth(false)
+        }
       })
-        .then((res) => res.json())
-        .catch((error) => console.log(error))
-        .then((response) => {
-
-            if (response.data) {
-            subscribeUser({
-                ...response.data,
-                username: credential.username,
-            })
-            router.push('/my-forms')
-             }
-            if(response.token){
-                subscribeUser({
-                    ...response,
-                    username: credential.username,
-                })
-                router.push('/my-forms')
-            }
-            else{
-                setStatusAuth(false)
-            }
-            
-        })
-    } 
-  
+  }
 
   //Handlers
 
   function loginHandler() {
-    !user.userId ?
-    props.handleLogin('Login')
-    :
-    router.push('/my-forms')
+    !user.userId ? props.handleLogin('Login') : router.push('/my-forms')
   }
   function signupHandler() {
     props.handleLogin('Signup')
@@ -81,15 +74,14 @@ const Body = (props) => {
     return (
       <div className={styles.theBody}>
         <div>
-          <img src={survey.src}></img>
+          <Image src={survey.src} alt="" />
         </div>
         <div className={styles.rightSide}>
           <h1>Forms for everyone!</h1>
           <p>
-            {' '}
-            Creating web forms with Enroute Form's unique form editor is just
+            {`Creating web forms with Enroute Form's unique form editor is just
             like writing a doc. Anyone can create beautiful online forms,
-            quickly and intuitively, without any technical knowledge.
+            quickly and intuitively, without any technical knowledge.`}
           </p>
           <button onClick={loginHandler}>
             <strong>START NOW</strong>
@@ -103,13 +95,14 @@ const Body = (props) => {
     return (
       <div className={styles.theBody}>
         <div>
-          <img src={launch.src}></img>
+          <Image alt="" src={launch.src} />
         </div>
         <div className={styles.rightSide}>
           <h1>Login</h1>
-          <label className={styles.wrong}
-           hidden={statusAuth}> 
-           The username and/or password is incorrect.<br/> Please try again</label>
+          <label className={styles.wrong} hidden={statusAuth}>
+            The username and/or password is incorrect.
+            <br /> Please try again
+          </label>
           <input
             type="email"
             placeholder="Username"
@@ -123,15 +116,16 @@ const Body = (props) => {
             name="password"
             onChange={credentialHandler}
           ></input>
-          <button onClick={authHandler}
-           className={styles.submit}
+          <button
+            onClick={authHandler}
+            className={styles.submit}
             name="login"
-            disabled={credential.password === ""}
-            >
+            disabled={credential.password === ''}
+          >
             Log In
           </button>
           <label>
-            Don't have an account yet?{' '}
+            {`Don't have an account yet?`}
             <button onClick={signupHandler}>Sign Up</button>
           </label>
         </div>
@@ -143,7 +137,7 @@ const Body = (props) => {
     return (
       <div className={styles.theBody}>
         <div>
-          <img src={customer.src}></img>
+          <Image alt="" src={customer.src} />
         </div>
         <div className={styles.rightSide}>
           <h1>Signup</h1>
@@ -186,7 +180,7 @@ const Body = (props) => {
   }
 }
 
-const mapStateToProps = ({user}) =>({
+const mapStateToProps = ({ user }) => ({
   user,
 })
 
