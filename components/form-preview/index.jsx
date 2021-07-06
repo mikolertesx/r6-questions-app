@@ -19,6 +19,25 @@ const FormPreview = ({ formId, title, removeForm }) => {
     document.body.removeChild(el)
   }
 
+  const deleteForm = async () => {
+    try {
+      const body = JSON.stringify({
+        id: formId
+      })
+      const response = await fetch('http://localhost:3000/api/forms/delete', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body
+      })
+      const json = await response.json()
+      console.log(json)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const router = useRouter()
   return (
     <div className={styles.container}>
@@ -40,6 +59,7 @@ const FormPreview = ({ formId, title, removeForm }) => {
           className={styles['control-btn']}
           onClick={() => {
             removeForm(formId)
+            deleteForm()
           }}
         />
       </div>
