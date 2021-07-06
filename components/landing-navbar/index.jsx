@@ -32,7 +32,7 @@ const Navbar = (props) => {
         </div>
       ) : (
         <div className={styles.logoutdiv}>
-          <h1>{` Hi, ${user.username}`} </h1>
+          <h1>{` Hi ${user.username}`} </h1>
           <button
             className={styles.Signup}
             onClick={() => {
