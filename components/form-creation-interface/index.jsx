@@ -15,13 +15,13 @@ const FormCreationInterface = ({ forms, user, updateForm }) => {
     ...forms[formId],
   })
 
-  const [saved, setSaved] = useState("Save Form")
+  const [saved, setSaved] = useState('Save Form')
 
   const saveForm = async () => {
-   setSaved("Saved!")
-   setTimeout(() => {
-    setSaved("Save Form")
-   }, 5000);
+    setSaved('Saved!')
+    setTimeout(() => {
+      setSaved('Save Form')
+    }, 5000)
     try {
       formData.author = user.userId
       const body = JSON.stringify({

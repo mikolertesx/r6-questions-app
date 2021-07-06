@@ -10,6 +10,15 @@ export const addForm = () => async (dispatch) => {
   })
 }
 
+export const fetchForms = (userId) => async (dispatch) => {
+  const response = await fetch(`http://localhost:3000/api/user/${userId}`)
+  const data = await response.json()
+  dispatch({
+    type: FORM_TYPES.FETCH_FORMS,
+    payload: data,
+  })
+}
+
 export const removeForm = (formId) => ({
   type: FORM_TYPES.REMOVE_FORM,
   payload: formId,
