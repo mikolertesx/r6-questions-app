@@ -1,7 +1,9 @@
 import { FORM_TYPES } from './types'
 
 export const addForm = () => async (dispatch) => {
-  const response = await fetch('http://localhost:3000/api/forms/create')
+  const response = await fetch(
+    'https://r6-questions-app-1.vercel.app/api/forms/create'
+  )
   const data = await response.json()
   const formId = data._id
   dispatch({
@@ -11,7 +13,9 @@ export const addForm = () => async (dispatch) => {
 }
 
 export const fetchForms = (userId) => async (dispatch) => {
-  const response = await fetch(`http://localhost:3000/api/user/${userId}`)
+  const response = await fetch(
+    `https://r6-questions-app-1.vercel.app/api/user/${userId}`
+  )
   const data = await response.json()
   dispatch({
     type: FORM_TYPES.FETCH_FORMS,

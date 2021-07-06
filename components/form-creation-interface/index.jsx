@@ -28,7 +28,7 @@ const FormCreationInterface = ({ forms, user, updateForm }) => {
         id: formId,
         form: formData,
       })
-      await fetch('http://localhost:3000/api/forms/update', {
+      await fetch('https://r6-questions-app-1.vercel.app/api/forms/update', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',

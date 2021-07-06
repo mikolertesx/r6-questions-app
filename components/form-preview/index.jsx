@@ -9,7 +9,7 @@ import { GrShareOption } from 'react-icons/gr'
 import styles from './styles.module.scss'
 
 const FormPreview = ({ formId, title, removeForm }) => {
-  const FORM_URI = `http://localhost:3000/form/${formId}`
+  const FORM_URI = `https://r6-questions-app-1.vercel.app/form/${formId}`
 
   const [copied, setCopied] = useState(true)
 
@@ -27,13 +27,16 @@ const FormPreview = ({ formId, title, removeForm }) => {
       const body = JSON.stringify({
         id: formId,
       })
-      const response = await fetch('http://localhost:3000/api/forms/delete', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body,
-      })
+      const response = await fetch(
+        'https://r6-questions-app-1.vercel.app/api/forms/delete',
+        {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body,
+        }
+      )
       const json = await response.json()
       console.log(json)
     } catch (error) {

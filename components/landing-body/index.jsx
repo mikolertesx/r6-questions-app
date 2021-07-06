@@ -34,11 +34,14 @@ const Body = (props) => {
   }
 
   const authHandler = (event) => {
-    fetch(`http://localhost:3000/api/auth/${event.target.name}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credential),
-    })
+    fetch(
+      `https://r6-questions-app-1.vercel.app/api/auth/${event.target.name}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credential),
+      }
+    )
       .then((res) => res.json())
       .catch((error) => console.log(error))
       .then((response) => {

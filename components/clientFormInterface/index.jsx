@@ -53,13 +53,16 @@ const ClientFormInterface = ({ isPreview, forms }) => {
         answer: answers,
         id: formId,
       })
-      const response = await fetch('http://localhost:3000/api/forms/answer', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body,
-      })
+      const response = await fetch(
+        'https://r6-questions-app-1.vercel.app/api/forms/answer',
+        {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body,
+        }
+      )
       const json = await response.json()
     } catch (error) {
       console.log(error)
@@ -70,7 +73,7 @@ const ClientFormInterface = ({ isPreview, forms }) => {
     const fetchQuestions = async () => {
       if (formId) {
         const response = await fetch(
-          `http://localhost:3000/api/forms/${formId}`
+          `https://r6-questions-app-1.vercel.app/api/forms/${formId}`
         )
         const parsedData = await response.json()
         const { data } = parsedData
