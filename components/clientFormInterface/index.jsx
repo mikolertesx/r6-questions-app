@@ -67,16 +67,18 @@ const ClientFormInterface = ({ isPreview, forms }) => {
   }
 
   useEffect(() => {
-		const fetchQuestions = async () => {
-			if (formId) {
-				const response = await fetch(`http://localhost:3000/api/forms/${formId}`)
-				const parsedData = await response.json()
-				const { data } = parsedData
-				console.log(data)
-				setQuestions(data.questions)
-				setFormTitle(data.formTitle)
-			}
-		}
+    const fetchQuestions = async () => {
+      if (formId) {
+        const response = await fetch(
+          `http://localhost:3000/api/forms/${formId}`
+        )
+        const parsedData = await response.json()
+        const { data } = parsedData
+        console.log(data)
+        setQuestions(data.questions)
+        setFormTitle(data.formTitle)
+      }
+    }
     if (isPreview && forms[formId]) {
       const { questions, formTitle } = forms[formId]
       setQuestions(questions)
@@ -109,13 +111,13 @@ const ClientFormInterface = ({ isPreview, forms }) => {
           )
         })}
       </div>
-      <div className={styles['form-interface-controls']}>
-        <Link href="/thanks">
+      {!isPreview && (
+        <div className={styles['form-interface-controls']}>
           <button onClick={sendAnswers}>
             <strong>Finish and Upload Answers</strong>
           </button>
-        </Link>
-      </div>
+        </div>
+      )}
     </div>
   )
 }
