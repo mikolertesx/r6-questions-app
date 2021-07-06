@@ -4,18 +4,20 @@ import { subscribeUser } from 'store/userReducer'
 import { useRouter } from 'next/router'
 import styles from './styles.module.scss'
 import launch from './Browsing.svg'
+import survey from './undraw.svg'
+import customer from './Customer.svg'
 
 const Body = (props) => {
   //
-  const { subscribeUser } = props
-  const authAlert = 'is-invalid'
+  const { subscribeUser, user } = props
+
 
   //Hooks
   const [credential, setCredential] = useState({
     username: '',
     password: '',
   })
-  const [statusAuth, setStatusAuth] = useState('')
+  const [statusAuth, setStatusAuth] = useState(true)
   const [passwordValid, setpasswordValid] = useState(true)
   const router = useRouter()
 
@@ -28,12 +30,10 @@ const Body = (props) => {
   }
 
   const credentialHandler = (event) => {
-    setStatusAuth('')
     setCredential({ ...credential, [event.target.name]: event.target.value })
   }
 
   const authHandler = (event) => {
-    if (Object.keys(credential).length === 2) {
       fetch(`http://localhost:3000/api/auth/${event.target.name}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -42,28 +42,36 @@ const Body = (props) => {
         .then((res) => res.json())
         .catch((error) => console.log(error))
         .then((response) => {
+
             if (response.data) {
             subscribeUser({
                 ...response.data,
                 username: credential.username,
-            })}
+            })
+            router.push('/my-forms')
+             }
             if(response.token){
                 subscribeUser({
                     ...response,
                     username: credential.username,
                 })
+                router.push('/my-forms')
             }
-          router.push('/my-forms')
+            else{
+                setStatusAuth(false)
+            }
+            
         })
-    } else {
-      setStatusAuth(authAlert)
-    }
-  }
+    } 
+  
 
   //Handlers
 
   function loginHandler() {
+    !user.userId ?
     props.handleLogin('Login')
+    :
+    router.push('/my-forms')
   }
   function signupHandler() {
     props.handleLogin('Signup')
@@ -73,7 +81,7 @@ const Body = (props) => {
     return (
       <div className={styles.theBody}>
         <div>
-          <img src={launch.src}></img>
+          <img src={survey.src}></img>
         </div>
         <div className={styles.rightSide}>
           <h1>Forms for everyone!</h1>
@@ -99,6 +107,9 @@ const Body = (props) => {
         </div>
         <div className={styles.rightSide}>
           <h1>Login</h1>
+          <label className={styles.wrong}
+           hidden={statusAuth}> 
+           The username and/or password is incorrect.<br/> Please try again</label>
           <input
             type="email"
             placeholder="Username"
@@ -112,7 +123,11 @@ const Body = (props) => {
             name="password"
             onChange={credentialHandler}
           ></input>
-          <button onClick={authHandler} className={styles.submit} name="login">
+          <button onClick={authHandler}
+           className={styles.submit}
+            name="login"
+            disabled={credential.password === ""}
+            >
             Log In
           </button>
           <label>
@@ -128,7 +143,7 @@ const Body = (props) => {
     return (
       <div className={styles.theBody}>
         <div>
-          <img src={launch.src}></img>
+          <img src={customer.src}></img>
         </div>
         <div className={styles.rightSide}>
           <h1>Signup</h1>
@@ -171,8 +186,12 @@ const Body = (props) => {
   }
 }
 
+const mapStateToProps = ({user}) =>({
+  user,
+})
+
 const mapDispatchToProps = (dispatch) => ({
   subscribeUser: (userdata) => dispatch(subscribeUser(userdata)),
 })
 
-export default connect(null, mapDispatchToProps)(Body)
+export default connect(mapStateToProps, mapDispatchToProps)(Body)

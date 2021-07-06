@@ -15,7 +15,13 @@ const FormCreationInterface = ({ forms, updateForm }) => {
     ...forms[formId],
   })
 
+  const [saved, setSaved] = useState("Save Form")
+
   const saveForm = async () => {
+   setSaved("Saved!")
+   setTimeout(() => {
+    setSaved("Save Form")
+   }, 5000);
     try {
       const body = JSON.stringify({
         id: formId,
@@ -69,7 +75,7 @@ const FormCreationInterface = ({ forms, updateForm }) => {
             <strong>Add a Question +</strong>
           </button>
           <button onClick={saveForm} style={{ marginLeft: '16px' }}>
-            <strong>Save form</strong>
+            <strong>{saved}</strong>
           </button>
         </div>
       </div>
