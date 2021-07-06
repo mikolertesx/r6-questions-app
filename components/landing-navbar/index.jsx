@@ -1,10 +1,9 @@
 import { connect } from 'react-redux'
 import { cleanForms } from 'store/formsReducer'
 import { unsubscribeUser } from 'store/userReducer'
-import Link from 'next/Link'
+import Link from 'next/link'
 import styles from './styles.module.scss'
 import { useRouter } from 'next/router'
-
 
 const Navbar = (props) => {
   const router = new useRouter()
@@ -44,7 +43,8 @@ const Navbar = (props) => {
           >
             Log out
           </button>
-          <Link href="/my-forms"><button>My Forms</button>
+          <Link href="/my-forms">
+            <button>My Forms</button>
           </Link>
         </div>
       )}
