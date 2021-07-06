@@ -11,6 +11,10 @@ const AnswerGroup = ({ answers }) => {
       return answer
     }
 
+    if (typeof answer === 'string' || typeof answer === 'number') {
+      return answer
+    }
+
     if (answer.length === 0) {
       return 'Not answered'
     }
@@ -18,7 +22,6 @@ const AnswerGroup = ({ answers }) => {
     return answer.join(', ')
   }
 
-  console.log(answers)
   return (
     <div className={styles['question-group']}>
       {answers &&

@@ -3,6 +3,7 @@ import { GiBouncingSword } from 'react-icons/gi'
 import styles from './styles.module.scss'
 
 const ButtonControls = ({ addFn, subtractFn, addText, subtractText }) => {
+	console.log(addText, subtractText)
   return (
     <div className={styles.container}>
       <div onClick={addFn} className={styles.btn}>
