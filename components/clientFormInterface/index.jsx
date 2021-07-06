@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { useRouter } from 'next/router'
 import QuestionCard from 'components/question-card'
 import styles from './styles.module.scss'
+import Link from 'next/Link'
 
 const mockup = {
   formName: 'Mockup form',
@@ -109,9 +110,11 @@ const ClientFormInterface = ({ isPreview, forms }) => {
         })}
       </div>
       <div className={styles['form-interface-controls']}>
-        <button onClick={sendAnswers}>
-          <strong>Finish and Upload Answers</strong>
-        </button>
+        <Link href="/thanks">
+          <button onClick={sendAnswers}>
+            <strong>Finish and Upload Answers</strong>
+          </button>
+        </Link>
       </div>
     </div>
   )
