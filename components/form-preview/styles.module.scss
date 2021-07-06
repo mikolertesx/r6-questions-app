@@ -27,6 +27,11 @@
 
 .controls {
   margin: 1rem;
+  display: flex;
+  align-items: center;
+  p{
+    margin: 0 0.5rem 0 0;
+  }
 }
 
 .control-btn {

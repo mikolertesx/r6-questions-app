@@ -44,6 +44,8 @@ const Navbar = (props) => {
           >
             Log out
           </button>
+          <Link href="/my-forms"><button>My Forms</button>
+          </Link>
         </div>
       )}
     </nav>

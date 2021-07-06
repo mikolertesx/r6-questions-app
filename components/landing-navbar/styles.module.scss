@@ -10,6 +10,9 @@
 
     h1{
         color: rgb(0, 169, 165);
+        &:hover{
+            cursor: pointer ;
+        }    
     }
 
     button{
@@ -22,16 +25,15 @@
         color: white;
         margin-left: 20px;
         box-shadow: 5px 5px 5px black;
-    }
-    .Signup{
-        background-color: #DE541E;
+        &:hover{
+            cursor: pointer ;
+        }  
     }
     .logoutdiv{
         display: flex;
         align-items: center;
         .Signup{
             background-color: #DE541E;
-            height: 2.5rem;
         }
     }
 }

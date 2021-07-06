@@ -1,5 +1,6 @@
 import Link from 'next/Link'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { connect } from 'react-redux'
 import { removeForm } from 'store/formsReducer'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
@@ -9,6 +10,8 @@ import styles from './styles.module.scss'
 
 const FormPreview = ({ formId, title, removeForm }) => {
   const FORM_URI = `http://localhost:3000/form/${formId}`
+
+  const [copied, setCopied] = useState(true)
 
   const copyFormUrl = () => {
     const el = document.createElement('input')
@@ -44,10 +47,13 @@ const FormPreview = ({ formId, title, removeForm }) => {
       <Link href={`/my-forms/${formId}`}>
         <h1 className={styles['form-title']}>{title}</h1>
       </Link>
-      <div className={styles.controls}>
+        <div className={styles.controls}>
+        <p hidden={copied}>Copied to clipboard!</p>
         <GrShareOption
           className={styles['control-btn']}
-          onClick={() => copyFormUrl()}
+          onClick={() =>{
+            setCopied(false) 
+            copyFormUrl()}}
         />
         <VscPreview
           className={styles['control-btn']}
