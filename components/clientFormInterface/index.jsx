@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { useRouter } from 'next/router'
 import QuestionCard from 'components/question-card'
 import styles from './styles.module.scss'
-import Link from 'next/Link'
+import Link from 'next/link'
 
 const mockup = {
   formName: 'Mockup form',
@@ -118,7 +118,6 @@ const ClientFormInterface = ({ isPreview, forms }) => {
               <strong>Finish and Upload Answers</strong>
             </button>
           </Link>
-          
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-import Link from 'next/Link'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { connect } from 'react-redux'
@@ -25,14 +25,14 @@ const FormPreview = ({ formId, title, removeForm }) => {
   const deleteForm = async () => {
     try {
       const body = JSON.stringify({
-        id: formId
+        id: formId,
       })
       const response = await fetch('http://localhost:3000/api/forms/delete', {
         method: 'POST',
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
         },
-        body
+        body,
       })
       const json = await response.json()
       console.log(json)
@@ -47,13 +47,14 @@ const FormPreview = ({ formId, title, removeForm }) => {
       <Link href={`/my-forms/${formId}`}>
         <h1 className={styles['form-title']}>{title}</h1>
       </Link>
-        <div className={styles.controls}>
+      <div className={styles.controls}>
         <p hidden={copied}>Copied to clipboard!</p>
         <GrShareOption
           className={styles['control-btn']}
-          onClick={() =>{
-            setCopied(false) 
-            copyFormUrl()}}
+          onClick={() => {
+            setCopied(false)
+            copyFormUrl()
+          }}
         />
         <VscPreview
           className={styles['control-btn']}
