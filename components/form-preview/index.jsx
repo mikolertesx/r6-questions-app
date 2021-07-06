@@ -1,4 +1,4 @@
-import Link from 'next/Link'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { connect } from 'react-redux'
@@ -9,7 +9,7 @@ import { GrShareOption } from 'react-icons/gr'
 import styles from './styles.module.scss'
 
 const FormPreview = ({ formId, title, removeForm }) => {
-  const FORM_URI = `http://localhost:3000/form/${formId}`
+  const FORM_URI = `https://r6-questions-app-1.vercel.app/form/${formId}`
 
   const [copied, setCopied] = useState(true)
 
@@ -25,15 +25,18 @@ const FormPreview = ({ formId, title, removeForm }) => {
   const deleteForm = async () => {
     try {
       const body = JSON.stringify({
-        id: formId
+        id: formId,
       })
-      const response = await fetch('http://localhost:3000/api/forms/delete', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body
-      })
+      const response = await fetch(
+        'https://r6-questions-app-1.vercel.app/api/forms/delete',
+        {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body,
+        }
+      )
       const json = await response.json()
       console.log(json)
     } catch (error) {
@@ -47,13 +50,14 @@ const FormPreview = ({ formId, title, removeForm }) => {
       <Link href={`/my-forms/${formId}`}>
         <h1 className={styles['form-title']}>{title}</h1>
       </Link>
-        <div className={styles.controls}>
+      <div className={styles.controls}>
         <p hidden={copied}>Copied to clipboard!</p>
         <GrShareOption
           className={styles['control-btn']}
-          onClick={() =>{
-            setCopied(false) 
-            copyFormUrl()}}
+          onClick={() => {
+            setCopied(false)
+            copyFormUrl()
+          }}
         />
         <VscPreview
           className={styles['control-btn']}

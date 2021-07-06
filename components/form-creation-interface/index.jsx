@@ -15,20 +15,20 @@ const FormCreationInterface = ({ forms, user, updateForm }) => {
     ...forms[formId],
   })
 
-  const [saved, setSaved] = useState("Save Form")
+  const [saved, setSaved] = useState('Save Form')
 
   const saveForm = async () => {
-   setSaved("Saved!")
-   setTimeout(() => {
-    setSaved("Save Form")
-   }, 5000);
+    setSaved('Saved!')
+    setTimeout(() => {
+      setSaved('Save Form')
+    }, 5000)
     try {
       formData.author = user.userId
       const body = JSON.stringify({
         id: formId,
         form: formData,
       })
-      await fetch('http://localhost:3000/api/forms/update', {
+      await fetch('https://r6-questions-app-1.vercel.app/api/forms/update', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
