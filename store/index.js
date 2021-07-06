@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux'
 import { persistReducer, persistStore } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import storage from './storage'
 import thunk from 'redux-thunk'
 
 import { reducers } from './rootReducer'
