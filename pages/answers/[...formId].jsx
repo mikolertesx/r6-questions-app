@@ -1,11 +1,14 @@
 import { useEffect, useState, Fragment } from 'react'
+import styles from './styles.module.scss'
 import { useRouter } from 'next/router'
+import ButtonControls from 'components/button-controls'
 import Navbar from 'components/landing-navbar'
 
 import AnswerGroup from 'components/answer-group'
 
 const FormAnswersPage = () => {
   const [answers, setAnswers] = useState([])
+  const [error, setError] = useState(null)
   const [currentAnswer, setCurrentAnswer] = useState(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
@@ -14,11 +17,19 @@ const FormAnswersPage = () => {
   const uniqueForm = formId ? formId[0] : null
 
   const goNextAnswer = () => {
-    setCurrentAnswer((prevCurrAns) => prevCurrAns + 1)
+    setCurrentAnswer((prevCurrAns) => {
+      if (prevCurrAns + 1 > answers.length - 1) return 0
+      return prevCurrAns + 1
+    })
   }
 
   const goPrevAnswer = () => {
-    setCurrentAnswer((prevCurrAns) => prevCurrAns - 1)
+    setCurrentAnswer((prevCurrAns) => {
+      if (prevCurrAns - 1 < 0) {
+        return answers.length - 1
+      }
+      return prevCurrAns - 1
+    })
   }
 
   useEffect(() => {
@@ -26,6 +37,12 @@ const FormAnswersPage = () => {
     const getAnswers = async () => {
       const response = await fetch(`/api/forms/${uniqueForm}/see-answers`)
       const data = await response.json()
+      if (data.error) {
+        setAnswers([])
+        setLoading(false)
+        setError(data.error.message)
+        return
+      }
       setAnswers(data)
       setLoading(false)
       setCurrentAnswer(0)
@@ -33,16 +50,6 @@ const FormAnswersPage = () => {
 
     getAnswers()
   }, [uniqueForm, loading])
-
-  // Avoid currentAnswer fro going over the top or the bottom
-  useEffect(() => {
-    if (currentAnswer === null) return
-    if (currentAnswer > answers.length - 1) {
-      setCurrentAnswer(0)
-    } else if (currentAnswer < 0) {
-      setCurrentAnswer(answers.length - 1)
-    }
-  }, [currentAnswer, answers])
 
   if (loading) {
     return (
@@ -53,14 +60,48 @@ const FormAnswersPage = () => {
     )
   }
 
+  const centeredStyle = {
+    textAlign: 'center',
+  }
+
+  if (error) {
+    return (
+      <>
+        <Navbar />
+        <h2 style={centeredStyle}>{"Can't load the form"}</h2>
+        <p style={centeredStyle}>
+          Ask the person that sent you this to try again!
+        </p>
+      </>
+    )
+  }
+
+  const controls = (
+    <div className={styles['elevated-form']}>
+      <h2
+        style={{
+          textAlign: 'center',
+        }}
+      >
+        Answer {currentAnswer + 1}/ {answers.length}
+      </h2>
+      <ButtonControls
+        addFn={goNextAnswer}
+        subtractFn={goPrevAnswer}
+        addText="Go to next answer"
+        subtractText="Go to previous answer"
+      />
+    </div>
+  )
+
   return (
     <Fragment>
       <Navbar />
+      {controls}
       <div>
         <AnswerGroup answers={answers[currentAnswer]} />
       </div>
-      <button onClick={goPrevAnswer}>-</button>
-      <button onClick={goNextAnswer}>+</button>
+      {controls}
     </Fragment>
   )
 }
