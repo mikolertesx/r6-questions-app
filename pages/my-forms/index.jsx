@@ -7,7 +7,7 @@ import Navbar from 'components/landing-navbar'
 import { useRouter } from 'next/router'
 
 const MyFormsPage = ({ user, forms, addForm }) => {
-  console.log(forms)
+  console.log(user)
   const [currentForms, setCurrentForms] = useState({ ...forms })
 
   const router = new useRouter()
@@ -17,8 +17,9 @@ const MyFormsPage = ({ user, forms, addForm }) => {
   }
 
   useEffect(() => {
-    if (!forms) {
-      console.log('Working')
+    setCurrentForms({ ...forms })
+    if (Object.keys(forms).length < 1) {
+      console.log('working')
     }
   }, [forms])
 
